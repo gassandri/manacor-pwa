@@ -6,27 +6,36 @@
   <meta name="theme-color" content="#16a34a" />
   <link rel="manifest" href="manifest.webmanifest">
   <title>CD Manacor · Fuerza + Pliometría</title>
-
   <style>
-    :root { --bg:#0b1220; --card:#121a2a; --text:#e6eefc; --muted:#a9b6d3; --acc:#22c55e; }
+    :root { --bg:#0b1220; --card:#121a2a; --text:#e6eefc; --muted:#a9b6d3; --acc:#22c55e; --danger:#ef4444; }
     @media (prefers-color-scheme: light) {
-      :root { --bg:#f6f8fb; --card:#ffffff; --text:#0b1220; --muted:#4b5563; --acc:#16a34a; }
+      :root { --bg:#f6f8fb; --card:#ffffff; --text:#0b1220; --muted:#4b5563; --acc:#16a34a; --danger:#dc2626; }
     }
     body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;background:var(--bg);color:var(--text)}
-    header{position:sticky;top:0;background:linear-gradient(180deg, rgba(0,0,0,.25), transparent);backdrop-filter: blur(10px);padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.08)}
+    header{position:sticky;top:0;background:linear-gradient(180deg, rgba(0,0,0,.25), transparent);backdrop-filter: blur(10px);
+      padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.08);z-index:10}
     h1{margin:0;font-size:18px}
-    main{max-width:920px;margin:0 auto;padding:16px;display:grid;gap:12px}
+    main{max-width:980px;margin:0 auto;padding:16px;display:grid;gap:12px}
     .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
     .card{background:var(--card);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:14px;box-shadow:0 8px 20px rgba(0,0,0,.15)}
     .muted{color:var(--muted)}
     .btn{border:1px solid rgba(255,255,255,.15);background:transparent;color:var(--text);padding:10px 12px;border-radius:12px;cursor:pointer}
-    .btn.primary{background:var(--acc);color:#04120a;border:none;font-weight:700}
-    select{padding:10px 12px;border-radius:12px;background:transparent;color:var(--text);border:1px solid rgba(255,255,255,.15)}
+    .btn.primary{background:var(--acc);color:#04120a;border:none;font-weight:800}
+    .btn.danger{background:transparent;border:1px solid rgba(239,68,68,.5);color:var(--danger);font-weight:700}
+    select,input{padding:10px 12px;border-radius:12px;background:transparent;color:var(--text);border:1px solid rgba(255,255,255,.15)}
     table{width:100%;border-collapse:collapse}
-    th,td{padding:10px;border-bottom:1px solid rgba(255,255,255,.08)}
-    th{font-size:12px;text-transform:uppercase;color:var(--muted);text-align:left}
-    a{color:var(--acc)}
+    th,td{padding:10px;border-bottom:1px solid rgba(255,255,255,.08);vertical-align:top}
+    th{text-align:left;font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+    a{color:var(--acc);text-decoration:none}
+    .pill{display:inline-block;padding:4px 10px;border-radius:999px;background:rgba(34,197,94,.15);
+      border:1px solid rgba(34,197,94,.35);font-size:12px}
+    .grid2{display:grid;grid-template-columns:1fr;gap:12px}
+    @media(min-width:920px){.grid2{grid-template-columns:1.2fr .8fr}}
     .hidden{display:none}
+    .exercise-title{display:flex;gap:10px;align-items:flex-start}
+    .exercise-title input{transform:scale(1.2);margin-top:3px}
+    .small{font-size:13px}
+    .hr{height:1px;background:rgba(255,255,255,.08);margin:12px 0}
   </style>
 </head>
 
@@ -34,117 +43,566 @@
 <header class="row" style="justify-content:space-between;">
   <div>
     <h1>CD Manacor · Fuerza + Pliometría</h1>
-    <div class="muted">Cadete autonómico · 4 días / semana</div>
+    <div class="muted small" id="subHeader">Cadete autonómico · 4 días/semana · 60 min</div>
   </div>
-  <select id="weekSelect"></select>
+  <div class="row">
+    <span class="pill" id="profilePill">Perfil: —</span>
+    <button class="btn" id="switchProfileBtn">Cambiar perfil</button>
+  </div>
 </header>
 
-<main>
-  <div id="home" class="card">
-    <h2>Plan semanal</h2>
-    <p class="muted">
-      Objetivo: mejorar velocidad, explosión y fuerza sin interferir con entrenamientos del club ni partido.
-    </p>
+<main class="grid2">
+  <section>
+    <!-- PERFIL / LOGIN SIMPLE -->
+    <div class="card" id="profileView">
+      <b>Elegir perfil</b>
+      <div class="muted small" style="margin-top:6px">
+        Cada perfil guarda su propio progreso y checks. (Sin cuentas ni contraseñas.)
+      </div>
 
-    <ul>
-      <li><b>Lunes</b> – Fuerza base + potencia</li>
-      <li><b>Martes</b> – Velocidad + pliometría</li>
-      <li><b>Jueves</b> – Fuerza unilateral explosiva</li>
-      <li><b>Sábado</b> – Activación pre-partido</li>
-    </ul>
+      <div class="hr"></div>
 
-    <button class="btn primary" onclick="openSession(0)">Abrir Lunes</button>
-    <button class="btn" onclick="openSession(1)">Abrir Martes</button>
-    <button class="btn" onclick="openSession(2)">Abrir Jueves</button>
-    <button class="btn" onclick="openSession(3)">Abrir Sábado</button>
-  </div>
+      <div class="row">
+        <select id="profileSelect" style="min-width:260px"></select>
+        <button class="btn primary" id="enterBtn">Entrar</button>
+      </div>
 
-  <div id="session" class="card hidden">
-    <h2 id="sessionTitle"></h2>
-    <p id="sessionObjective" class="muted"></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Ejercicio</th>
-          <th>Series</th>
-          <th>Reps</th>
-          <th>Descanso</th>
-          <th>Video</th>
-        </tr>
-      </thead>
-      <tbody id="exerciseTable"></tbody>
-    </table>
-    <br>
-    <button class="btn" onclick="goHome()">← Volver</button>
-  </div>
+      <div class="row" style="margin-top:10px">
+        <input id="newProfileName" placeholder="Crear perfil extra (opcional)" style="min-width:260px"/>
+        <button class="btn" id="createProfileBtn">Crear perfil</button>
+      </div>
+
+      <div class="row" style="margin-top:10px">
+        <button class="btn danger" id="deleteProfileBtn">Eliminar perfil seleccionado</button>
+      </div>
+
+      <div class="muted small" id="profileMsg" style="margin-top:10px"></div>
+    </div>
+
+    <!-- APP -->
+    <div class="card hidden" id="appView">
+      <div class="row" style="justify-content:space-between;">
+        <div>
+          <div class="pill" id="viewPill">Vista: Plan semanal</div>
+          <div class="muted small" id="weekLabel"></div>
+        </div>
+        <div class="row">
+          <label class="muted small">Semana</label>
+          <select id="weekSelect"></select>
+          <button class="btn" id="homeBtn">Plan semanal</button>
+          <button class="btn" id="resetChecksBtn">Reset checks</button>
+        </div>
+      </div>
+
+      <div style="height:10px"></div>
+
+      <div id="homeView">
+        <div class="card" style="padding:12px;margin-bottom:12px">
+          <b>Objetivo general</b>
+          <div class="muted small" style="margin-top:6px">
+            Mejorar aceleración, potencia y fuerza específica sin interferir con entrenos del club ni el partido.
+            No ir al fallo (2–3 reps en reserva). Calidad &gt; fatiga.
+          </div>
+        </div>
+
+        <div class="card" style="padding:12px;margin-bottom:12px">
+          <b>Diagrama semanal</b>
+          <div class="muted small" style="margin-top:6px;white-space:pre-line">
+• Lunes: Fuerza base + potencia (60 min)
+• Martes: Velocidad + pliometría (60 min)
+• Jueves: Fuerza explosiva unilateral (60 min)
+• Sábado: Activación pre-partido (45–50 min)
+
+Entrenos club: L–X–J–V 18:00 · Partido: sábado
+          </div>
+        </div>
+
+        <div id="sessionCards"></div>
+      </div>
+
+      <div id="sessionView" class="hidden">
+        <div class="card" style="padding:12px;margin-bottom:12px">
+          <b id="sessionTitle"></b>
+          <div class="muted small" id="sessionObjective" style="margin-top:6px"></div>
+          <div class="muted small" id="sessionMeta" style="margin-top:6px"></div>
+        </div>
+
+        <div class="card" style="padding:12px;margin-bottom:12px">
+          <b>Temporizador descanso</b>
+          <div class="row" style="margin-top:8px">
+            <button class="btn" data-preset="60">60s</button>
+            <button class="btn" data-preset="90">90s</button>
+            <button class="btn" data-preset="120">120s</button>
+            <button class="btn" data-preset="150">150s</button>
+          </div>
+          <div class="row" style="margin-top:10px;justify-content:space-between;">
+            <div style="font-size:26px;font-weight:800" id="timerText">90s</div>
+            <div class="row">
+              <button class="btn primary" id="timerStartBtn">Iniciar</button>
+              <button class="btn" id="timerResetBtn">Reset</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="padding:0;overflow:hidden">
+          <table>
+            <thead>
+              <tr>
+                <th>Ejercicio</th>
+                <th>Series</th>
+                <th>Reps</th>
+                <th>Descanso</th>
+                <th>Vídeo</th>
+              </tr>
+            </thead>
+            <tbody id="exerciseTable"></tbody>
+          </table>
+        </div>
+
+        <div class="card" style="padding:12px;margin-top:12px">
+          <b>Reglas de calidad</b>
+          <div class="muted small" style="margin-top:6px;white-space:pre-line">
+• No ir al fallo (2–3 reps en reserva)
+• Parar si baja la velocidad o la técnica
+• Descansos completos en potencia/sprints
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <aside>
+    <div class="card">
+      <b>Progresión automática por semana</b>
+      <div class="muted small" style="margin-top:6px;white-space:pre-line">
+Sem 1–2: base
+Sem 3–4: +1 serie SOLO en fuerza (sentadilla, hip thrust, RDL, búlgaro, nordic)
+Sem 5: descarga (-30% series aprox.)
+Sem 6: vuelve a Sem 3–4
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:12px">
+      <b>Material</b>
+      <div class="muted small" style="margin-top:6px">
+        Barra dominadas · Press banca · Escaleras · Balón medicinal · Cintas/Elásticos · Barra y discos
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:12px">
+      <b>Consejo práctico</b>
+      <div class="muted small" style="margin-top:6px">
+        Lunes/Martes/Jueves mejor por la mañana o mediodía para no llegar cargado al entreno del club.
+      </div>
+    </div>
+  </aside>
 </main>
 
 <script>
-const sessions = [
-{
-  title:"Lunes – Fuerza base + Potencia",
-  objective:"Fuerza general y potencia aplicable a sprint y salto.",
-  exercises:[
-    ["Sentadilla con barra","4","4–5","2’30”","https://www.youtube.com/watch?v=ultWZbUMPL8"],
-    ["Hip Thrust","3","5–6","2’","https://www.youtube.com/watch?v=LM8XHLYJoYs"],
-    ["Peso muerto rumano","3","6","2’","https://www.youtube.com/watch?v=2SHsk9AzdjA"],
-    ["Saltos al cajón","4","3","90”","https://www.youtube.com/watch?v=52r_Ul5k03g"],
-    ["Balón medicinal pecho","3","5","60–90”","https://www.youtube.com/watch?v=V8g6dXKjN5A"]
-  ]
-},
-{
-  title:"Martes – Velocidad + Pliometría",
-  objective:"Aceleración, reactividad y potencia horizontal.",
-  exercises:[
-    ["Pogos reactivos","3","15–20","60”","https://www.youtube.com/watch?v=R1JYx6zJ2Ys"],
-    ["Saltos unipodales","3","4/pierna","60–90”","https://www.youtube.com/watch?v=ZC8z0cY2tGk"],
-    ["Bounds","4","20–25 m","90”","https://www.youtube.com/watch?v=9jP5ZL5D6Y0"],
-    ["Sprint 10–20 m","6","1","2–3’","https://www.youtube.com/watch?v=YkqvJvGz5gM"]
-  ]
-},
-{
-  title:"Jueves – Fuerza unilateral",
-  objective:"Fuerza por pierna y prevención de lesiones.",
-  exercises:[
-    ["Split squat búlgaro","3","5/pierna","2’","https://www.youtube.com/watch?v=2C-uNgKwPLE"],
-    ["Step-up explosivo","3","4/pierna","90”","https://www.youtube.com/watch?v=9LIAhxQHmak"],
-    ["Nordic curl","2–3","3–5","2’","https://www.youtube.com/watch?v=4b6G2P0wC5I"]
-  ]
-},
-{
-  title:"Sábado – Activación pre-partido",
-  objective:"Activar sistema nervioso sin generar fatiga.",
-  exercises:[
-    ["Activación con gomas","2","10–12","30”","https://www.youtube.com/watch?v=0a6yJv6u5RQ"],
-    ["Saltos reactivos","3","3","60”","https://www.youtube.com/watch?v=R1JYx6zJ2Ys"],
-    ["Sprint 5–10 m","4","1","90”","https://www.youtube.com/watch?v=J1xN3O1tEJk"]
-  ]
-}
-];
+  // =========================
+  // 1) Datos del plan
+  // =========================
+  const PLAN_SESSIONS = [
+    {
+      id: "mon",
+      title: "Lunes – Fuerza base + Potencia",
+      duration: "60 min",
+      objective: "Fuerza general + conversión a potencia aplicable a sprint y salto.",
+      exercises: [
+        { id:"sq", name:"Sentadilla con barra", sets:"4", reps:"4–5", rest:"2’30”", url:"https://www.youtube.com/watch?v=ultWZbUMPL8", desc:"Espalda neutra, bajada controlada, subida explosiva. No al fallo.", kind:"strength"},
+        { id:"ht", name:"Hip Thrust", sets:"3", reps:"5–6", rest:"2’", url:"https://www.youtube.com/watch?v=LM8XHLYJoYs", desc:"Pausa 1s arriba. Enfocar glúteo, no lumbar.", kind:"strength"},
+        { id:"rdl", name:"Peso muerto rumano", sets:"3", reps:"6", rest:"2’", url:"https://www.youtube.com/watch?v=2SHsk9AzdjA", desc:"Cadera atrás, barra pegada, tensión en isquios.", kind:"strength"},
+        { id:"box", name:"Saltos al cajón / escaleras", sets:"4", reps:"3", rest:"90”", url:"https://www.youtube.com/watch?v=52r_Ul5k03g", desc:"Pocos saltos, máxima calidad. Aterrizaje silencioso.", kind:"power"},
+        { id:"mbc", name:"Balón medicinal (pecho)", sets:"3", reps:"5", rest:"60–90”", url:"https://www.youtube.com/watch?v=V8g6dXKjN5A", desc:"Lanzar explosivo, como una acción de sprint con brazos.", kind:"power"}
+      ]
+    },
+    {
+      id: "tue",
+      title: "Martes – Velocidad + Pliometría",
+      duration: "60 min",
+      objective: "Reactividad, potencia horizontal y aceleración (sin fatigar).",
+      exercises: [
+        { id:"pogo", name:"Pogos reactivos", sets:"3", reps:"15–20", rest:"60”", url:"https://www.youtube.com/watch?v=R1JYx6zJ2Ys", desc:"Tobillo firme, rebote rápido, poca flexión de rodilla.", kind:"power"},
+        { id:"uni", name:"Saltos unipodales", sets:"3", reps:"4 por pierna", rest:"60–90”", url:"https://www.youtube.com/watch?v=ZC8z0cY2tGk", desc:"Rodilla estable (no colapse hacia dentro).", kind:"power"},
+        { id:"bounds", name:"Bounds", sets:"4", reps:"20–25 m", rest:"90”", url:"https://www.youtube.com/watch?v=9jP5ZL5D6Y0", desc:"Saltos largos y potentes, postura alta, cadera activa.", kind:"power"},
+        { id:"sprint20", name:"Sprint 10–20 m", sets:"6", reps:"1", rest:"2–3’", url:"https://www.youtube.com/watch?v=YkqvJvGz5gM", desc:"Arranque agresivo. Descanso completo para mantener velocidad.", kind:"speed"},
+        { id:"ladder", name:"Escalera de agilidad", sets:"2", reps:"4–5 patrones", rest:"60”", url:"https://www.youtube.com/watch?v=R5JpU9JmG8k", desc:"Coordinación y ritmo. No sustituye a la velocidad real.", kind:"accessory"}
+      ]
+    },
+    {
+      id: "thu",
+      title: "Jueves – Fuerza explosiva unilateral",
+      duration: "60 min",
+      objective: "Fuerza por pierna, estabilidad y prevención (isquios/rodilla).",
+      exercises: [
+        { id:"bulg", name:"Split squat búlgaro", sets:"3", reps:"5 por pierna", rest:"2’", url:"https://www.youtube.com/watch?v=2C-uNgKwPLE", desc:"Torso firme, control de rodilla, subir fuerte.", kind:"strength"},
+        { id:"step", name:"Step-up explosivo", sets:"3", reps:"4 por pierna", rest:"90”", url:"https://www.youtube.com/watch?v=9LIAhxQHmak", desc:"Subida rápida, bajada controlada. Pierna de apoyo trabaja.", kind:"power"},
+        { id:"nordic", name:"Nordic curl", sets:"2–3", reps:"3–5", rest:"2’", url:"https://www.youtube.com/watch?v=4b6G2P0wC5I", desc:"Bajada lenta. Si hace falta, ayudar con manos/elástico.", kind:"strength"},
+        { id:"mbr", name:"Balón medicinal rotacional", sets:"3", reps:"5 por lado", rest:"60–90”", url:"https://www.youtube.com/watch?v=F8u6ZxYQYRE", desc:"Giro potente desde cadera, tronco estable.", kind:"power"}
+      ]
+    },
+    {
+      id: "sat",
+      title: "Sábado – Activación pre-partido",
+      duration: "45–50 min",
+      objective: "Activar sistema nervioso y musculatura sin fatiga.",
+      exercises: [
+        { id:"bands", name:"Activación con gomas", sets:"2", reps:"10–12", rest:"30”", url:"https://www.youtube.com/watch?v=0a6yJv6u5RQ", desc:"Glúteo medio, cadera y core. Sensación de “despertar”.", kind:"accessory"},
+        { id:"react", name:"Saltos reactivos", sets:"3", reps:"3", rest:"60”", url:"https://www.youtube.com/watch?v=R1JYx6zJ2Ys", desc:"Pocos y rápidos. Máxima chispa.", kind:"power"},
+        { id:"sprint10", name:"Sprint 5–10 m", sets:"4", reps:"1", rest:"90”", url:"https://www.youtube.com/watch?v=J1xN3O1tEJk", desc:"Arranques cortos para activación neural.", kind:"speed"},
+        { id:"cod", name:"Cambios de dirección", sets:"3", reps:"3–4", rest:"60”", url:"https://www.youtube.com/watch?v=3Zf7U0sP9kM", desc:"Cadera baja, frenar fuerte, salir rápido.", kind:"speed"}
+      ]
+    }
+  ];
 
-function openSession(i){
-  document.getElementById("home").classList.add("hidden");
-  document.getElementById("session").classList.remove("hidden");
-  document.getElementById("sessionTitle").innerText = sessions[i].title;
-  document.getElementById("sessionObjective").innerText = sessions[i].objective;
-  const table = document.getElementById("exerciseTable");
-  table.innerHTML="";
-  sessions[i].exercises.forEach(e=>{
-    table.innerHTML += `
-      <tr>
-        <td>${e[0]}</td>
-        <td>${e[1]}</td>
-        <td>${e[2]}</td>
-        <td>${e[3]}</td>
-        <td><a href="${e[4]}" target="_blank">Ver</a></td>
-      </tr>`;
+  // =========================
+  // 2) Perfiles (sin login)
+  // =========================
+  const LS_PROFILES = "mpwa_profiles";
+  const LS_ACTIVE_PROFILE = "mpwa_active_profile";
+
+  function loadProfiles(){
+    const raw = localStorage.getItem(LS_PROFILES);
+
+    // Perfiles iniciales por defecto
+    const defaultProfiles = [
+      { id: "juancho", name: "JUANCHO" },
+      { id: "benja",   name: "BENJA" },
+      { id: "gaston",  name: "GASTON" }
+    ];
+
+    if (!raw) {
+      localStorage.setItem(LS_PROFILES, JSON.stringify(defaultProfiles));
+      return defaultProfiles;
+    }
+
+    try {
+      return JSON.parse(raw) || defaultProfiles;
+    } catch {
+      return defaultProfiles;
+    }
+  }
+
+  function saveProfiles(p){ localStorage.setItem(LS_PROFILES, JSON.stringify(p)); }
+
+  function getActiveProfileId(){
+    return localStorage.getItem(LS_ACTIVE_PROFILE) || "";
+  }
+  function setActiveProfileId(id){
+    localStorage.setItem(LS_ACTIVE_PROFILE, id);
+  }
+
+  function profileKey(prefix){
+    const pid = getActiveProfileId();
+    return `mpwa_${pid}_${prefix}`;
+  }
+
+  // =========================
+  // 3) Semana / progresión
+  // =========================
+  const weeks = [1,2,3,4,5,6];
+  const weekSelect = document.getElementById("weekSelect");
+  weeks.forEach(w=>{
+    const opt=document.createElement("option");
+    opt.value=w; opt.textContent=`${w}`;
+    weekSelect.appendChild(opt);
   });
-}
 
-function goHome(){
-  document.getElementById("session").classList.add("hidden");
-  document.getElementById("home").classList.remove("hidden");
-}
+  function getWeek(){
+    const raw = localStorage.getItem(profileKey("week"));
+    return Number(raw || "1");
+  }
+  function setWeek(w){
+    localStorage.setItem(profileKey("week"), String(w));
+  }
+
+  function adjustSets(baseSets, kind, week){
+    const m = String(baseSets).match(/\d+/);
+    const n = m ? parseInt(m[0],10) : 3;
+    if (week === 5) return String(Math.max(1, Math.round(n*0.7)));
+    if ((week===3 || week===4 || week===6) && kind==="strength") return String(n+1);
+    return String(baseSets);
+  }
+
+  // =========================
+  // 4) UI refs
+  // =========================
+  const profileView = document.getElementById("profileView");
+  const appView = document.getElementById("appView");
+  const profileSelect = document.getElementById("profileSelect");
+  const profileMsg = document.getElementById("profileMsg");
+  const profilePill = document.getElementById("profilePill");
+  const switchProfileBtn = document.getElementById("switchProfileBtn");
+
+  const homeView = document.getElementById("homeView");
+  const sessionView = document.getElementById("sessionView");
+  const viewPill = document.getElementById("viewPill");
+  const weekLabel = document.getElementById("weekLabel");
+  const sessionCards = document.getElementById("sessionCards");
+  const sessionTitle = document.getElementById("sessionTitle");
+  const sessionObjective = document.getElementById("sessionObjective");
+  const sessionMeta = document.getElementById("sessionMeta");
+  const exerciseTable = document.getElementById("exerciseTable");
+  const homeBtn = document.getElementById("homeBtn");
+  const resetChecksBtn = document.getElementById("resetChecksBtn");
+
+  // =========================
+  // 5) Perfil UI logic
+  // =========================
+  function refreshProfileSelect(){
+    const profiles = loadProfiles();
+    profileSelect.innerHTML = "";
+    profiles.forEach(p=>{
+      const opt=document.createElement("option");
+      opt.value=p.id; opt.textContent=p.name;
+      profileSelect.appendChild(opt);
+    });
+
+    const active = getActiveProfileId();
+    if (active) profileSelect.value = active;
+    else profileSelect.value = profiles[0]?.id || "";
+  }
+
+  function enterProfile(){
+    const pid = profileSelect.value;
+    if (!pid){
+      profileMsg.textContent = "No hay perfiles. Crea uno primero.";
+      return;
+    }
+    setActiveProfileId(pid);
+    const profiles = loadProfiles();
+    const p = profiles.find(x=>x.id===pid);
+    profilePill.textContent = `Perfil: ${p ? p.name : pid}`;
+
+    if (!localStorage.getItem(profileKey("week"))) setWeek(1);
+
+    profileView.classList.add("hidden");
+    appView.classList.remove("hidden");
+
+    weekSelect.value = String(getWeek());
+    renderHome();
+  }
+
+  function showProfileChooser(){
+    profileView.classList.remove("hidden");
+    appView.classList.add("hidden");
+    viewPill.textContent = "Vista: —";
+  }
+
+  document.getElementById("enterBtn").onclick = enterProfile;
+
+  document.getElementById("createProfileBtn").onclick = ()=>{
+    const name = (document.getElementById("newProfileName").value || "").trim();
+    if (!name){ profileMsg.textContent = "Pon un nombre."; return; }
+
+    const profiles = loadProfiles();
+    const id = "p" + Math.random().toString(16).slice(2,10);
+    profiles.push({id, name});
+    saveProfiles(profiles);
+    document.getElementById("newProfileName").value = "";
+    profileMsg.textContent = `Perfil creado: ${name}`;
+    refreshProfileSelect();
+    profileSelect.value = id;
+  };
+
+  document.getElementById("deleteProfileBtn").onclick = ()=>{
+    const pid = profileSelect.value;
+    const profiles = loadProfiles();
+    if (profiles.length <= 1){
+      profileMsg.textContent = "Debes dejar al menos 1 perfil.";
+      return;
+    }
+    const p = profiles.find(x=>x.id===pid);
+    const ok = confirm(`¿Eliminar perfil "${p?.name || pid}"? Se borra su progreso en ESTE dispositivo.`);
+    if (!ok) return;
+
+    Object.keys(localStorage).forEach(k=>{
+      if (k.startsWith(`mpwa_${pid}_`)) localStorage.removeItem(k);
+    });
+
+    const next = profiles.filter(x=>x.id!==pid);
+    saveProfiles(next);
+
+    if (getActiveProfileId()===pid){
+      setActiveProfileId(next[0].id);
+    }
+
+    profileMsg.textContent = "Perfil eliminado.";
+    refreshProfileSelect();
+  };
+
+  switchProfileBtn.onclick = ()=>{
+    showProfileChooser();
+    refreshProfileSelect();
+    profileMsg.textContent = "";
+  };
+
+  // =========================
+  // 6) App rendering
+  // =========================
+  function renderHome(){
+    homeView.classList.remove("hidden");
+    sessionView.classList.add("hidden");
+    viewPill.textContent = "Vista: Plan semanal";
+    const w = getWeek();
+    weekLabel.textContent = `Semana ${w}`;
+
+    sessionCards.innerHTML = "";
+    PLAN_SESSIONS.forEach(s=>{
+      const c = document.createElement("div");
+      c.className="card";
+      c.style.marginBottom="10px";
+      c.innerHTML = `
+        <div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start">
+          <div>
+            <div style="font-weight:800">${s.title}</div>
+            <div class="muted small" style="margin-top:4px"><b>Objetivo:</b> ${s.objective}</div>
+            <div class="muted small" style="margin-top:4px">Duración: ${s.duration}</div>
+          </div>
+          <button class="btn primary">Abrir</button>
+        </div>`;
+      c.querySelector("button").onclick = ()=>openSession(s.id);
+      sessionCards.appendChild(c);
+    });
+  }
+
+  function checkKey(week, sessionId, exId){
+    return profileKey(`check_w${week}_${sessionId}_${exId}`);
+  }
+
+  function openSession(sessionId){
+    const s = PLAN_SESSIONS.find(x=>x.id===sessionId);
+    const w = getWeek();
+
+    homeView.classList.add("hidden");
+    sessionView.classList.remove("hidden");
+    viewPill.textContent = "Vista: Sesión";
+    sessionTitle.textContent = s.title;
+    sessionObjective.textContent = `Objetivo: ${s.objective}`;
+    sessionMeta.textContent = `Duración: ${s.duration} · Semana ${w}`;
+
+    exerciseTable.innerHTML = "";
+    s.exercises.forEach(ex=>{
+      const tr = document.createElement("tr");
+      const adjSets = adjustSets(ex.sets, ex.kind, w);
+      const key = checkKey(w, s.id, ex.id);
+      const checked = localStorage.getItem(key)==="1";
+
+      tr.innerHTML = `
+        <td>
+          <div class="exercise-title">
+            <input type="checkbox" ${checked ? "checked":""} />
+            <div>
+              <div style="font-weight:800">${ex.name}</div>
+              <div class="muted small">${ex.desc}</div>
+            </div>
+          </div>
+        </td>
+        <td>${adjSets}</td>
+        <td>${ex.reps}</td>
+        <td>${ex.rest}</td>
+        <td><a href="${ex.url}" target="_blank" rel="noopener">Ver video</a></td>
+      `;
+      tr.querySelector("input").addEventListener("change",(ev)=>{
+        localStorage.setItem(key, ev.target.checked ? "1":"0");
+      });
+      exerciseTable.appendChild(tr);
+    });
+  }
+
+  homeBtn.onclick = renderHome;
+
+  resetChecksBtn.onclick = ()=>{
+    const w=getWeek();
+    const pid=getActiveProfileId();
+    Object.keys(localStorage)
+      .filter(k=>k.startsWith(`mpwa_${pid}_check_w${w}_`))
+      .forEach(k=>localStorage.removeItem(k));
+    alert(`Checks reseteados para la Semana ${w} (${profilePill.textContent})`);
+  };
+
+  // =========================
+  // 7) Timer
+  // =========================
+  let timer = null;
+  let remaining = 90;
+  let initial = 90;
+  const timerText = document.getElementById("timerText");
+  const startBtn = document.getElementById("timerStartBtn");
+  const resetBtn = document.getElementById("timerResetBtn");
+
+  function renderTimer(){ timerText.textContent = `${remaining}s`; }
+
+  document.querySelectorAll("[data-preset]").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      const v = Number(btn.dataset.preset);
+      initial=v; remaining=v;
+      if (timer){ clearInterval(timer); timer=null; }
+      startBtn.textContent="Iniciar";
+      renderTimer();
+    });
+  });
+
+  startBtn.onclick = ()=>{
+    if (timer){
+      clearInterval(timer); timer=null;
+      startBtn.textContent="Iniciar";
+      return;
+    }
+    startBtn.textContent="Pausar";
+    timer=setInterval(()=>{
+      remaining--;
+      if (remaining<=0){
+        remaining=0;
+        clearInterval(timer); timer=null;
+        startBtn.textContent="Iniciar";
+        if (navigator.vibrate) navigator.vibrate([200,100,200]);
+      }
+      renderTimer();
+    }, 1000);
+  };
+
+  resetBtn.onclick = ()=>{
+    if (timer){ clearInterval(timer); timer=null; }
+    remaining=initial;
+    startBtn.textContent="Iniciar";
+    renderTimer();
+  };
+
+  // =========================
+  // 8) Semana selector
+  // =========================
+  weekSelect.onchange = ()=>{
+    setWeek(Number(weekSelect.value));
+    renderHome();
+  };
+
+  // =========================
+  // 9) Service worker
+  // =========================
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", ()=>navigator.serviceWorker.register("./sw.js"));
+  }
+
+  // =========================
+  // 10) Init
+  // =========================
+  refreshProfileSelect();
+  const active = getActiveProfileId();
+  if (active){
+    const profiles = loadProfiles();
+    const p = profiles.find(x=>x.id===active);
+    profilePill.textContent = `Perfil: ${p ? p.name : active}`;
+    profileView.classList.add("hidden");
+    appView.classList.remove("hidden");
+    weekSelect.value = String(getWeek());
+    renderTimer();
+    renderHome();
+  } else {
+    showProfileChooser();
+    profilePill.textContent = "Perfil: —";
+    renderTimer();
+  }
 </script>
 </body>
 </html>
