@@ -3,19 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#2e2e2e">
-<title>Entrenamiento · Fuerza & Potencia</title>
+<title>Entrenamiento · Fuerza y Potencia</title>
 
 <style>
 :root{
-  --bg1:#0f0f12;
-  --bg2:#1a1a1f;
-  --card:#222228;
+  --bg1:#0e0f13;
+  --bg2:#1a1c22;
+  --card:#20232b;
   --text:#f5f5f5;
-  --muted:#b5b5b5;
+  --muted:#b0b3c0;
   --line:rgba(255,255,255,.15);
   --accent:#d4d4d8;
-  --radius:16px;
 }
 *{box-sizing:border-box}
 body{
@@ -25,19 +23,17 @@ body{
   color:var(--text);
 }
 header{
-  position:sticky;top:0;z-index:10;
-  background:rgba(0,0,0,.55);
-  backdrop-filter:blur(10px);
+  background:rgba(0,0,0,.6);
   border-bottom:1px solid var(--line);
+  padding:14px 16px;
 }
-.wrap{max-width:960px;margin:auto;padding:14px 16px}
 h1{margin:0;font-size:18px}
 .small{font-size:13px;color:var(--muted)}
-main{max-width:960px;margin:auto;padding:16px}
+main{max-width:900px;margin:auto;padding:16px}
 .card{
   background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02));
   border:1px solid var(--line);
-  border-radius:var(--radius);
+  border-radius:14px;
   padding:14px;
   margin-bottom:12px;
 }
@@ -47,7 +43,7 @@ main{max-width:960px;margin:auto;padding:16px}
   padding:10px 14px;
   border-radius:12px;
   border:1px solid var(--line);
-  background:rgba(255,255,255,.06);
+  background:rgba(255,255,255,.08);
   color:var(--text);
   cursor:pointer;
   font-weight:700;
@@ -59,7 +55,7 @@ main{max-width:960px;margin:auto;padding:16px}
 }
 .hidden{display:none}
 
-/* ===== SELECT ARREGLADO DEFINITIVO ===== */
+/* SELECT ARREGLADO */
 select{
   padding:10px 12px;
   border-radius:12px;
@@ -68,14 +64,11 @@ select{
   color:#f5f5f5;
   font-weight:600;
   appearance:none;
-  -webkit-appearance:none;
-  -moz-appearance:none;
 }
 select option{
   background:#1f1f1f;
   color:#f5f5f5;
 }
-/* ====================================== */
 
 table{width:100%;border-collapse:collapse}
 th,td{padding:8px;border-bottom:1px solid var(--line)}
@@ -87,25 +80,20 @@ a{color:#e5e5e5}
 <body>
 
 <header>
-  <div class="wrap">
-    <h1>Planes de Entrenamiento</h1>
-    <div class="small">Fuerza · Potencia · Fútbol</div>
-  </div>
+  <h1>Planes de Entrenamiento</h1>
+  <div class="small">Fuerza · Potencia · Fútbol</div>
 </header>
 
 <main>
 
-<!-- MENSAJE -->
 <div class="card" id="motivation"></div>
 
-<!-- PERFIL -->
 <div class="card" id="profileView">
   <b>Seleccionar usuario</b><br><br>
   <select id="profileSelect"></select>
   <button class="btn primary" onclick="enterProfile()">Entrar</button>
 </div>
 
-<!-- APP -->
 <div class="card hidden" id="appView">
 
   <div class="row between">
@@ -143,7 +131,7 @@ a{color:#e5e5e5}
 </main>
 
 <script>
-// ===== MENSAJES =====
+// MENSAJES
 const MOTIVATION=[
   "Entrena hoy como quieres jugar mañana.",
   "La constancia vence al talento.",
@@ -159,27 +147,36 @@ const MOTIVATION=[
 document.getElementById("motivation").textContent =
   MOTIVATION[Math.floor(Math.random()*MOTIVATION.length)];
 
-// ===== PERFILES =====
+// PERFILES
 const PROFILES={
-  juancho:{name:"JUANCHO",info:"Fútbol · Plan equilibrado",plan:"A"},
-  benja:{name:"BENJA",info:"17 años · Masa + explosión",plan:"B"},
-  gaston:{name:"GASTON",info:"9 años · Coordinación y velocidad",plan:"C"}
+  juancho:{name:"JUANCHO",info:"Cadete autonómico · Potencia"},
+  benja:{name:"BENJA",info:"17 años · Masa + explosión"},
+  gaston:{name:"GASTON",info:"9 años · Coordinación"}
 };
 
-// ===== PLANES (resumidos) =====
-const PLAN_A=[{id:"mon",title:"Fuerza + Potencia",objective:"Base sólida",ex:[
-  ["Sentadilla","4","5","2–3m","https://youtu.be/ultWZbUMPL8"]
-]}];
-const PLAN_B=[{id:"mon",title:"Pierna masa",objective:"Ganar masa",ex:[
-  ["Sentadilla","4","6","2–3m","https://youtu.be/ultWZbUMPL8"]
-]}];
-const PLAN_C=[{id:"mon",title:"Coordinación",objective:"Moverse bien",ex:[
-  ["Escalera","3","patrones","60s","https://youtu.be/R5JpU9JmG8k"]
-]}];
+// PLANES
+const PLANS={
+  juancho:[
+    {title:"Fuerza + Potencia",objective:"Base sólida",ex:[
+      ["Sentadilla","4","5","2–3m","https://youtu.be/ultWZbUMPL8"],
+      ["Saltos","4","3","90s","https://youtu.be/52r_Ul5k03g"]
+    ]}
+  ],
+  benja:[
+    {title:"Pierna masa",objective:"Hipertrofia",ex:[
+      ["Sentadilla","4","6","2–3m","https://youtu.be/ultWZbUMPL8"]
+    ]}
+  ],
+  gaston:[
+    {title:"Coordinación",objective:"Moverse bien",ex:[
+      ["Escalera","3","patrones","60s","https://youtu.be/R5JpU9JmG8k"]
+    ]}
+  ]
+};
 
-let ACTIVE_PROFILE=null;
+let ACTIVE=null;
 
-// ===== INIT =====
+// INIT
 const profileSelect=document.getElementById("profileSelect");
 Object.keys(PROFILES).forEach(p=>{
   const o=document.createElement("option");
@@ -194,17 +191,12 @@ const weekSelect=document.getElementById("weekSelect");
   weekSelect.appendChild(o);
 });
 
-function getPlan(){
-  const p=PROFILES[ACTIVE_PROFILE].plan;
-  return p==="A"?PLAN_A:p==="B"?PLAN_B:PLAN_C;
-}
-
 function enterProfile(){
-  ACTIVE_PROFILE=profileSelect.value;
+  ACTIVE=profileSelect.value;
   document.getElementById("profileView").classList.add("hidden");
   document.getElementById("appView").classList.remove("hidden");
-  document.getElementById("profileName").textContent=PROFILES[ACTIVE_PROFILE].name;
-  document.getElementById("profileInfo").textContent=PROFILES[ACTIVE_PROFILE].info;
+  document.getElementById("profileName").textContent=PROFILES[ACTIVE].name;
+  document.getElementById("profileInfo").textContent=PROFILES[ACTIVE].info;
   renderHome();
 }
 
@@ -212,11 +204,12 @@ function renderHome(){
   document.getElementById("sessionView").classList.add("hidden");
   const home=document.getElementById("homeView");
   home.innerHTML="";
-  getPlan().forEach(s=>{
+  PLANS[ACTIVE].forEach(s=>{
     const c=document.createElement("div");
     c.className="card";
-    c.innerHTML=`<b>${s.title}</b><br><span class="small">${s.objective}</span><br><br>
-    <button class="btn primary">Abrir</button>`;
+    c.innerHTML=`<b>${s.title}</b><br>
+      <span class="small">${s.objective}</span><br><br>
+      <button class="btn primary">Abrir</button>`;
     c.querySelector("button").onclick=()=>openSession(s);
     home.appendChild(c);
   });
