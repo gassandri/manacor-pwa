@@ -20,4 +20,131 @@
     .card{background:var(--card);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:14px;box-shadow:0 8px 20px rgba(0,0,0,.15)}
     .muted{color:var(--muted)}
     .btn{border:1px solid rgba(255,255,255,.15);background:transparent;color:var(--text);padding:10px 12px;border-radius:12px;cursor:pointer}
-    .btn.primary{b
+    .btn.primary{background:var(--acc);color:#04120a;border:none;font-weight:700}
+    select{padding:10px 12px;border-radius:12px;background:transparent;color:var(--text);border:1px solid rgba(255,255,255,.15)}
+    table{width:100%;border-collapse:collapse}
+    th,td{padding:10px;border-bottom:1px solid rgba(255,255,255,.08)}
+    th{font-size:12px;text-transform:uppercase;color:var(--muted);text-align:left}
+    a{color:var(--acc)}
+    .hidden{display:none}
+  </style>
+</head>
+
+<body>
+<header class="row" style="justify-content:space-between;">
+  <div>
+    <h1>CD Manacor · Fuerza + Pliometría</h1>
+    <div class="muted">Cadete autonómico · 4 días / semana</div>
+  </div>
+  <select id="weekSelect"></select>
+</header>
+
+<main>
+  <div id="home" class="card">
+    <h2>Plan semanal</h2>
+    <p class="muted">
+      Objetivo: mejorar velocidad, explosión y fuerza sin interferir con entrenamientos del club ni partido.
+    </p>
+
+    <ul>
+      <li><b>Lunes</b> – Fuerza base + potencia</li>
+      <li><b>Martes</b> – Velocidad + pliometría</li>
+      <li><b>Jueves</b> – Fuerza unilateral explosiva</li>
+      <li><b>Sábado</b> – Activación pre-partido</li>
+    </ul>
+
+    <button class="btn primary" onclick="openSession(0)">Abrir Lunes</button>
+    <button class="btn" onclick="openSession(1)">Abrir Martes</button>
+    <button class="btn" onclick="openSession(2)">Abrir Jueves</button>
+    <button class="btn" onclick="openSession(3)">Abrir Sábado</button>
+  </div>
+
+  <div id="session" class="card hidden">
+    <h2 id="sessionTitle"></h2>
+    <p id="sessionObjective" class="muted"></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Ejercicio</th>
+          <th>Series</th>
+          <th>Reps</th>
+          <th>Descanso</th>
+          <th>Video</th>
+        </tr>
+      </thead>
+      <tbody id="exerciseTable"></tbody>
+    </table>
+    <br>
+    <button class="btn" onclick="goHome()">← Volver</button>
+  </div>
+</main>
+
+<script>
+const sessions = [
+{
+  title:"Lunes – Fuerza base + Potencia",
+  objective:"Fuerza general y potencia aplicable a sprint y salto.",
+  exercises:[
+    ["Sentadilla con barra","4","4–5","2’30”","https://www.youtube.com/watch?v=ultWZbUMPL8"],
+    ["Hip Thrust","3","5–6","2’","https://www.youtube.com/watch?v=LM8XHLYJoYs"],
+    ["Peso muerto rumano","3","6","2’","https://www.youtube.com/watch?v=2SHsk9AzdjA"],
+    ["Saltos al cajón","4","3","90”","https://www.youtube.com/watch?v=52r_Ul5k03g"],
+    ["Balón medicinal pecho","3","5","60–90”","https://www.youtube.com/watch?v=V8g6dXKjN5A"]
+  ]
+},
+{
+  title:"Martes – Velocidad + Pliometría",
+  objective:"Aceleración, reactividad y potencia horizontal.",
+  exercises:[
+    ["Pogos reactivos","3","15–20","60”","https://www.youtube.com/watch?v=R1JYx6zJ2Ys"],
+    ["Saltos unipodales","3","4/pierna","60–90”","https://www.youtube.com/watch?v=ZC8z0cY2tGk"],
+    ["Bounds","4","20–25 m","90”","https://www.youtube.com/watch?v=9jP5ZL5D6Y0"],
+    ["Sprint 10–20 m","6","1","2–3’","https://www.youtube.com/watch?v=YkqvJvGz5gM"]
+  ]
+},
+{
+  title:"Jueves – Fuerza unilateral",
+  objective:"Fuerza por pierna y prevención de lesiones.",
+  exercises:[
+    ["Split squat búlgaro","3","5/pierna","2’","https://www.youtube.com/watch?v=2C-uNgKwPLE"],
+    ["Step-up explosivo","3","4/pierna","90”","https://www.youtube.com/watch?v=9LIAhxQHmak"],
+    ["Nordic curl","2–3","3–5","2’","https://www.youtube.com/watch?v=4b6G2P0wC5I"]
+  ]
+},
+{
+  title:"Sábado – Activación pre-partido",
+  objective:"Activar sistema nervioso sin generar fatiga.",
+  exercises:[
+    ["Activación con gomas","2","10–12","30”","https://www.youtube.com/watch?v=0a6yJv6u5RQ"],
+    ["Saltos reactivos","3","3","60”","https://www.youtube.com/watch?v=R1JYx6zJ2Ys"],
+    ["Sprint 5–10 m","4","1","90”","https://www.youtube.com/watch?v=J1xN3O1tEJk"]
+  ]
+}
+];
+
+function openSession(i){
+  document.getElementById("home").classList.add("hidden");
+  document.getElementById("session").classList.remove("hidden");
+  document.getElementById("sessionTitle").innerText = sessions[i].title;
+  document.getElementById("sessionObjective").innerText = sessions[i].objective;
+  const table = document.getElementById("exerciseTable");
+  table.innerHTML="";
+  sessions[i].exercises.forEach(e=>{
+    table.innerHTML += `
+      <tr>
+        <td>${e[0]}</td>
+        <td>${e[1]}</td>
+        <td>${e[2]}</td>
+        <td>${e[3]}</td>
+        <td><a href="${e[4]}" target="_blank">Ver</a></td>
+      </tr>`;
+  });
+}
+
+function goHome(){
+  document.getElementById("session").classList.add("hidden");
+  document.getElementById("home").classList.remove("hidden");
+}
+</script>
+</body>
+</html>
