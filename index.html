@@ -210,4 +210,34 @@ function enterProfile(){
 
 function renderHome(){
   document.getElementById("sessionView").classList.add("hidden");
-  const home=do
+  const home=document.getElementById("homeView");
+  home.innerHTML="";
+  getPlan().forEach(s=>{
+    const c=document.createElement("div");
+    c.className="card";
+    c.innerHTML=`<b>${s.title}</b><br><span class="small">${s.objective}</span><br><br>
+    <button class="btn primary">Abrir</button>`;
+    c.querySelector("button").onclick=()=>openSession(s);
+    home.appendChild(c);
+  });
+}
+
+function openSession(s){
+  document.getElementById("homeView").innerHTML="";
+  document.getElementById("sessionView").classList.remove("hidden");
+  document.getElementById("sessionTitle").textContent=s.title;
+  document.getElementById("sessionObjective").textContent=s.objective;
+  const tb=document.getElementById("exerciseTable");
+  tb.innerHTML="";
+  s.ex.forEach(e=>{
+    const tr=document.createElement("tr");
+    tr.innerHTML=`<td><input type="checkbox"></td>
+    <td>${e[0]}</td><td>${e[1]}</td><td>${e[2]}</td><td>${e[3]}</td>
+    <td><a href="${e[4]}" target="_blank">Ver</a></td>`;
+    tb.appendChild(tr);
+  });
+}
+</script>
+
+</body>
+</html>
