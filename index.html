@@ -570,6 +570,46 @@
         </div>
       </div>
     </aside>
+<!-- MODAL CRONÓMETRO -->
+<div id="timerModal" class="hidden" style="
+  position:fixed; inset:0; z-index:9999;
+  background:rgba(0,0,0,.55); backdrop-filter: blur(8px);
+  display:flex; align-items:center; justify-content:center; padding:16px;">
+  <div class="card" style="max-width:520px; width:100%;">
+    <div class="inner">
+      <div class="row between">
+        <div>
+          <div style="font-weight:950;font-size:16px">Cronómetro de descanso</div>
+          <div class="muted small" id="timerExerciseName">—</div>
+        </div>
+        <button class="btn" id="timerCloseBtn">Cerrar</button>
+      </div>
+
+      <div class="sep"></div>
+
+      <div style="font-size:44px; font-weight:950; text-align:center; letter-spacing:.5px" id="timerDisplay">00:00</div>
+      <div class="row" style="justify-content:center; margin-top:10px">
+        <button class="btn" id="timerStartBtn">▶ Iniciar</button>
+        <button class="btn" id="timerPauseBtn">⏸ Pausa</button>
+        <button class="btn danger" id="timerResetBtn">↺ Reset</button>
+      </div>
+
+      <div class="sep"></div>
+
+      <div class="row" style="justify-content:center">
+        <button class="btn" data-tsec="30">30s</button>
+        <button class="btn" data-tsec="60">60s</button>
+        <button class="btn" data-tsec="90">90s</button>
+        <button class="btn" data-tsec="120">2m</button>
+      </div>
+
+      <div class="hint" style="margin-top:12px">
+        Tip: en sprints y saltos, espera a sentirte <b>listo</b> (descanso completo).
+      </div>
+    </div>
+  </div>
+</div>
+
   </main>
 
   <!-- ========================================================= -->
@@ -1299,3 +1339,4 @@
 
 </body>
 </html>
+
