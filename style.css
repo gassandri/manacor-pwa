@@ -1,166 +1,55 @@
-:root {
-  --bg0: #0b0d10;
-  --bg1: #0f1217;
-  --text: #e9eef7;
-  --muted: rgba(233, 238, 247, 0.66);
-}
-
-* {
-  box-sizing: border-box;
-}
-
-html,
-body {
-  height: 100%;
-  margin: 0;
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  background: radial-gradient(1200px 600px at 50% 20%, #141925 0%, var(--bg0) 55%, #07080b 100%);
-  color: var(--text);
-}
-
-.app {
-  min-height: 100%;
-  display: grid;
-  place-items: center;
-  padding: 24px;
-}
-
-.logo-wrap {
-  width: min(520px, 92vw);
-}
-
-/* Caja del logo */
-.logo {
-  position: relative;
-  width: 100%;
-  border-radius: 18px;
-  padding: 28px 22px 22px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
-  box-shadow:
-    0 18px 60px rgba(0, 0, 0, 0.55),
-    inset 0 1px 0 rgba(255, 255, 255, 0.06);
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-/* Barras metálicas */
-.bars {
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  gap: 14px;
-  padding-top: 10px;
-  padding-bottom: 18px;
-}
-
-/* Estilo base de cada palo */
-.bar {
-  width: 22px;
-  border-radius: 10px;
-  position: relative;
-
-  /* Metal */
-  background:
-    linear-gradient(90deg,
-      rgba(255,255,255,0.08) 0%,
-      rgba(255,255,255,0.20) 20%,
-      rgba(255,255,255,0.06) 45%,
-      rgba(255,255,255,0.24) 65%,
-      rgba(255,255,255,0.07) 100%),
-    linear-gradient(180deg, #9aa4b2 0%, #5f6a78 22%, #2a323d 55%, #0f141b 100%);
-
-  box-shadow:
-    0 10px 22px rgba(0, 0, 0, 0.5),
-    inset 0 1px 0 rgba(255, 255, 255, 0.18),
-    inset 0 -10px 18px rgba(0, 0, 0, 0.35);
-
-  /* “canto”/brillo vertical */
-  overflow: hidden;
-}
-
-.bar::after {
-  content: "";
-  position: absolute;
+/* Splash fondo */
+.splash {
+  position: fixed;
   inset: 0;
-  background: linear-gradient(
-    90deg,
-    rgba(255,255,255,0.0) 0%,
-    rgba(255,255,255,0.18) 34%,
-    rgba(255,255,255,0.0) 70%
-  );
-  mix-blend-mode: screen;
-  opacity: 0.6;
-}
-
-/* Alturas (según tu pedido) */
-.bar.left {
-  height: 92px;
-}
-
-.bar.center {
-  height: 128px; /* más alto */
-}
-
-.bar.right {
-  height: 68px; /* más bajo y que se note */
-}
-
-/* Texto BLOODLINE */
-.wordmark {
+  background: radial-gradient(circle at top, #111 0%, #000 70%);
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 9999;
 }
 
-.word {
-  letter-spacing: 0.38em;
-  font-weight: 650;
-  font-size: clamp(18px, 3.4vw, 22px);
-  color: var(--text);
-  text-shadow: 0 6px 20px rgba(0, 0, 0, 0.55);
-  padding-left: 0.38em; /* para que se centre visualmente con tracking */
+/* Contenedor logo */
+.logo-container {
+  position: relative;
+  width: min(420px, 85vw);
 }
 
-/* Brillo diagonal sutil (sale al abrir) */
-.shine {
+/* Imagen logo */
+.logo-img {
+  width: 100%;
+  display: block;
+  filter: drop-shadow(0 25px 45px rgba(0, 0, 0, 0.8));
+}
+
+/* Brillo diagonal */
+.logo-shine {
   position: absolute;
-  top: -35%;
-  left: -60%;
-  width: 55%;
+  top: -40%;
+  left: -70%;
+  width: 60%;
   height: 180%;
-  transform: rotate(22deg);
+  transform: rotate(25deg);
   background: linear-gradient(
     90deg,
-    rgba(255,255,255,0) 0%,
-    rgba(255,255,255,0.06) 35%,
-    rgba(255,255,255,0.16) 50%,
-    rgba(255,255,255,0.06) 65%,
-    rgba(255,255,255,0) 100%
+    transparent 0%,
+    rgba(255,255,255,0.15) 45%,
+    rgba(255,255,255,0.35) 50%,
+    rgba(255,255,255,0.15) 55%,
+    transparent 100%
   );
-  filter: blur(1px);
+  filter: blur(2px);
   opacity: 0;
   pointer-events: none;
 }
 
-/* Animación: brillo pasa una vez */
-.logo.is-opening .shine {
-  opacity: 1;
-  animation: sweep 1.2s ease-out forwards;
+.splash.animate .logo-shine {
+  animation: shine-sweep 1.2s ease-out forwards;
 }
 
-@keyframes sweep {
+@keyframes shine-sweep {
   0%   { left: -70%; opacity: 0; }
-  12%  { opacity: 0.55; }
-  55%  { opacity: 0.35; }
+  15%  { opacity: 0.6; }
+  60%  { opacity: 0.35; }
   100% { left: 140%; opacity: 0; }
-}
-
-/* Sutil “respiración” del logo (opcional y muy leve) */
-.logo.is-opening {
-  animation: settle 520ms ease-out both;
-}
-
-@keyframes settle {
-  0% { transform: scale(0.985); }
-  100% { transform: scale(1); }
 }
