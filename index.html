@@ -3,160 +3,80 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="theme-color" content="#3f3f46" />
-  <link rel="manifest" href="manifest.webmanifest">
-  <title>Planes · Fuerza + Potencia (Familia)</title>
+  <meta name="theme-color" content="#2f3137" />
+  <title>Entrenamiento · Fuerza + Potencia (Familia)</title>
 
-  <!-- ========================================================= -->
-  <!--  ESTILOS (gris degradé + look app)                         -->
-  <!-- ========================================================= -->
   <style>
     :root{
       --bg1:#0b0d10;
       --bg2:#12151b;
-      --card:#171a21;
-      --card2:#1b1f28;
+      --card: rgba(255,255,255,.06);
+      --card2: rgba(255,255,255,.035);
+      --line: rgba(255,255,255,.12);
       --text:#f5f5f5;
       --muted:#b9bcc6;
-      --line:rgba(255,255,255,.10);
       --shadow: 0 18px 45px rgba(0,0,0,.35);
-      --accent:#a3a3a3;
-      --accent2:#d4d4d8;
       --good:#22c55e;
       --warn:#f59e0b;
       --danger:#ef4444;
       --radius:18px;
       --focus: rgba(212,212,216,.35);
-      --soft: rgba(255,255,255,.04);
-      --soft2: rgba(255,255,255,.02);
     }
 
-    *{box-sizing:border-box}
-
+    *{ box-sizing:border-box; }
     body{
       margin:0;
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
       color:var(--text);
+      min-height:100vh;
       background:
         radial-gradient(1200px 600px at 20% 10%, rgba(255,255,255,.08), transparent 55%),
         radial-gradient(1000px 650px at 80% 20%, rgba(255,255,255,.06), transparent 60%),
         linear-gradient(180deg, var(--bg1), var(--bg2));
-      min-height:100vh;
     }
 
     header{
-      position:sticky;
-      top:0;
-      z-index:20;
+      position:sticky; top:0; z-index:50;
       backdrop-filter: blur(12px);
-      background: linear-gradient(180deg, rgba(0,0,0,.45), rgba(0,0,0,.15));
+      background: linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,.20));
       border-bottom:1px solid var(--line);
     }
+    .wrap{ max-width:1100px; margin:0 auto; padding:14px 16px; }
+    .topbar{ display:flex; gap:12px; align-items:center; justify-content:space-between; flex-wrap:wrap; }
+    h1{ margin:0; font-size:18px; letter-spacing:.2px; }
+    .subtitle{ color:var(--muted); font-size:13px; }
 
-    .wrap{
-      max-width:1060px;
-      margin:0 auto;
-      padding:14px 16px;
-    }
-
-    .topbar{
-      display:flex;
-      gap:12px;
-      align-items:center;
-      justify-content:space-between;
-      flex-wrap:wrap;
-    }
-
-    .title{
-      display:flex;
-      flex-direction:column;
-      gap:2px;
-    }
-
-    h1{
-      margin:0;
-      font-size:18px;
-      letter-spacing:.2px
-    }
-
-    .subtitle{
-      color:var(--muted);
-      font-size:13px
-    }
-
-    main{
-      max-width:1060px;
-      margin:0 auto;
-      padding:16px;
-      display:grid;
-      gap:14px;
-    }
-
+    main{ max-width:1100px; margin:0 auto; padding:16px; display:grid; gap:14px; }
     @media (min-width: 980px){
-      main{
-        grid-template-columns: 1.25fr .75fr;
-        align-items:start;
-      }
+      main{ grid-template-columns: 1.25fr .75fr; align-items:start; }
     }
 
     .card{
-      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
-      border:1px solid var(--line);
       border-radius: var(--radius);
+      border:1px solid var(--line);
+      background: linear-gradient(180deg, var(--card), var(--card2));
       box-shadow: var(--shadow);
       overflow:hidden;
     }
+    .inner{ padding:14px; }
 
-    .card .inner{
-      padding:14px
-    }
-
-    .card.soft{
-      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.015));
-      box-shadow: 0 10px 28px rgba(0,0,0,.25);
-    }
-
-    .row{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      align-items:center
-    }
-
-    .between{
-      justify-content:space-between
-    }
-
-    .muted{
-      color:var(--muted)
-    }
-
-    .small{
-      font-size:13px
-    }
+    .row{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+    .between{ justify-content:space-between; }
+    .muted{ color:var(--muted); }
+    .small{ font-size:13px; }
+    .hidden{ display:none !important; }
 
     .pill{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:7px 10px;
-      border-radius:999px;
+      display:inline-flex; align-items:center; gap:8px;
+      padding:7px 10px; border-radius:999px;
       border:1px solid rgba(255,255,255,.14);
       background: rgba(255,255,255,.06);
-      font-size:12px;
-      color:var(--accent2);
+      font-size:12px; color:#e5e7eb;
     }
-
-    .dot{
-      width:8px;
-      height:8px;
-      border-radius:50%;
-      background: rgba(255,255,255,.55)
-    }
-
-    .dot.good{ background: rgba(34,197,94,.9) }
-    .dot.warn{ background: rgba(245,158,11,.95) }
-    .dot.bad{ background: rgba(239,68,68,.95) }
+    .dot{ width:8px; height:8px; border-radius:50%; background: rgba(255,255,255,.55); }
+    .dot.good{ background: rgba(34,197,94,.95); }
+    .dot.warn{ background: rgba(245,158,11,.95); }
+    .dot.bad{ background: rgba(239,68,68,.95); }
 
     .btn{
       appearance:none;
@@ -166,169 +86,45 @@
       padding:10px 12px;
       border-radius: 14px;
       cursor:pointer;
+      font-weight:800;
       transition: transform .05s ease, background .15s ease, border-color .15s ease;
-      font-weight:700;
     }
-
-    .btn:hover{
-      background: rgba(255,255,255,.10);
-      border-color: rgba(255,255,255,.20)
-    }
-
-    .btn:active{
-      transform: translateY(1px)
-    }
-
+    .btn:hover{ background: rgba(255,255,255,.10); border-color: rgba(255,255,255,.22); }
+    .btn:active{ transform: translateY(1px); }
     .btn.primary{
       background: linear-gradient(180deg, #e5e7eb, #a1a1aa);
-      border:none;
-      color:#111827;
-      font-weight:900;
+      border:none; color:#111827; font-weight:900;
     }
+    .btn.ghost{ background:transparent; }
+    .btn.danger{ border-color: rgba(239,68,68,.35); color:#fecaca; }
+    .btn.good{ border-color: rgba(34,197,94,.35); color:#bbf7d0; }
 
-    .btn.ghost{ background:transparent }
-    .btn.danger{
-      border-color: rgba(239,68,68,.35);
-      color:#fecaca
-    }
-
-    .btn.good{
-      border-color: rgba(34,197,94,.35);
-      color:#bbf7d0
-    }
-
-    /* ========================================================= */
-    /*  SELECTS LEGIBLES (soluciona blanco sobre blanco)          */
-    /* ========================================================= */
-
+    /* SELECTS SIEMPRE LEGIBLES */
     select, input{
       padding:10px 12px;
       border-radius:14px;
       border:1px solid rgba(255,255,255,.18);
       background: linear-gradient(180deg, #2a2a2a, #1f1f1f);
-      color: #f5f5f5;
-      outline:none;
-      font-weight:600;
-      -webkit-appearance: none;
-      appearance: none;
-    }
-
-    select:focus, input:focus{
-      border-color: rgba(212,212,216,.5);
-      box-shadow: 0 0 0 3px rgba(212,212,216,.15);
-    }
-
-    select option{
-      background:#1f1f1f;
       color:#f5f5f5;
+      outline:none;
+      font-weight:700;
+      appearance:none;
+      -webkit-appearance:none;
+      -moz-appearance:none;
     }
-
-    /* ========================================================= */
-
-    .grid{
-      display:grid;
-      gap:12px
+    select:focus, input:focus{
+      border-color: rgba(212,212,216,.55);
+      box-shadow: 0 0 0 3px rgba(212,212,216,.12);
     }
-
-    .sessionCard{
-      border-radius: var(--radius);
-      border:1px solid rgba(255,255,255,.10);
-      background: linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.02));
-      padding:14px;
-    }
-
-    .sessionCard h3{
-      margin:0 0 6px 0;
-      font-size:16px
-    }
-
-    .sessionCard .meta{
-      color:var(--muted);
-      font-size:13px;
-      line-height:1.35
-    }
-
-    .sessionCard .actions{
-      margin-top:10px;
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      align-items:center;
-      justify-content:space-between;
-    }
-
-    .progressWrap{
-      display:flex;
-      gap:10px;
-      align-items:center;
-      width:100%;
-    }
-
-    .progressBar{
-      flex:1;
-      height:10px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.06);
-      overflow:hidden;
-    }
-
-    .progressFill{
-      height:100%;
-      width:0%;
-      background: linear-gradient(90deg, rgba(34,197,94,.95), rgba(212,212,216,.85));
-    }
-
-    .progressText{
-      font-size:12px;
-      color:var(--muted);
-      min-width:86px;
-      text-align:right;
-    }
-
-    table{
-      width:100%;
-      border-collapse:collapse
-    }
-
-    th, td{
-      padding:10px;
-      border-bottom:1px solid rgba(255,255,255,.10);
-      vertical-align:top
-    }
-
-    th{
-      font-size:12px;
-      text-transform:uppercase;
-      letter-spacing:.08em;
-      color:var(--muted);
-      text-align:left
-    }
-
-    a{ color:#e5e7eb }
-    a:hover{ color:white }
-
-    .check{
-      transform: scale(1.2);
-      accent-color: #d4d4d8;
-      cursor:pointer;
-    }
+    select option{ background:#1f1f1f; color:#f5f5f5; }
 
     .banner{
       padding:14px;
-      background: linear-gradient(135deg, rgba(255,255,255,.07), rgba(255,255,255,.02));
+      background: linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
       border-bottom:1px solid rgba(255,255,255,.10);
     }
-
-    .banner strong{ font-size:15px }
-
-    .banner .quote{
-      font-size:18px;
-      font-weight:900;
-      margin-top:6px;
-      letter-spacing:.2px
-    }
-
+    .banner strong{ font-size:15px; }
+    .quote{ font-size:18px; font-weight:950; margin-top:6px; letter-spacing:.2px; }
     .hint{
       padding:12px 14px;
       border-top:1px solid rgba(255,255,255,.10);
@@ -337,245 +133,249 @@
       line-height:1.45;
     }
 
-    .right .card{
-      position:sticky;
-      top:86px
+    .sessionCard{
+      border-radius: var(--radius);
+      border:1px solid rgba(255,255,255,.10);
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      padding:14px;
     }
+    .sessionCard h3{ margin:0 0 6px 0; font-size:16px; }
+    .meta{ color:var(--muted); font-size:13px; line-height:1.35; }
 
-    .kpi{
-      display:grid;
-      gap:10px;
-      grid-template-columns:1fr 1fr
+    .progressWrap{ display:flex; gap:10px; align-items:center; width:100%; }
+    .bar{
+      flex:1; height:10px; border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      overflow:hidden;
     }
+    .fill{ height:100%; width:0%; background: linear-gradient(90deg, rgba(34,197,94,.95), rgba(212,212,216,.85)); }
+    .pct{ font-size:12px; color:var(--muted); min-width:92px; text-align:right; }
 
+    table{ width:100%; border-collapse:collapse; }
+    th, td{ padding:10px; border-bottom:1px solid rgba(255,255,255,.10); vertical-align:top; }
+    th{ font-size:12px; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); text-align:left; }
+    a{ color:#e5e7eb; }
+    a:hover{ color:white; }
+
+    .check{ transform: scale(1.2); accent-color: #d4d4d8; cursor:pointer; }
+
+    .right .card{ position:sticky; top:86px; }
+    .kpi{ display:grid; gap:10px; grid-template-columns:1fr 1fr; }
     .kpi .box{
       padding:12px;
       border:1px solid rgba(255,255,255,.10);
       border-radius:16px;
       background: rgba(255,255,255,.04);
     }
-
-    .kpi .val{
-      font-size:18px;
-      font-weight:900
-    }
-
-    .kpi .lab{
-      font-size:12px;
-      color:var(--muted);
-      text-transform:uppercase;
-      letter-spacing:.08em
-    }
-
-    .sep{
-      height:1px;
-      background: rgba(255,255,255,.10);
-      margin:12px 0
-    }
-
-    .hidden{ display:none !important; }
-
+    .kpi .val{ font-size:18px; font-weight:950; }
+    .kpi .lab{ font-size:12px; color:var(--muted); text-transform:uppercase; letter-spacing:.08em; }
+    .sep{ height:1px; background: rgba(255,255,255,.10); margin:12px 0; }
     .tag{
-      display:inline-flex;
-      gap:8px;
-      align-items:center;
-      font-size:12px;
-      color:var(--muted);
-      padding:6px 10px;
-      border-radius:999px;
+      display:inline-flex; align-items:center; gap:8px;
+      padding:6px 10px; border-radius:999px;
       border:1px solid rgba(255,255,255,.10);
       background: rgba(255,255,255,.04);
+      color:var(--muted); font-size:12px;
     }
 
-    .kbd{
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-      font-size: 12px;
-      padding: 2px 6px;
-      border-radius: 8px;
-      border: 1px solid rgba(255,255,255,.15);
-      background: rgba(0,0,0,.25);
-      color: #e5e7eb;
+    /* Timer button y details */
+    .timerBtn{
+      border:1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.08);
+      border-radius: 12px;
+      padding: 8px 10px;
+      cursor:pointer;
+      font-weight:900;
+      color:#fff;
+    }
+    .timerBtn:hover{ background: rgba(255,255,255,.12); }
+    details summary{
+      cursor:pointer;
+      color:#e5e7eb;
+      font-weight:900;
+    }
+    details{ margin-top:8px; }
+
+    /* Modal timer */
+    #timerModal{
+      position:fixed; inset:0; z-index:9999;
+      background:rgba(0,0,0,.55); backdrop-filter: blur(8px);
+      display:none; align-items:center; justify-content:center; padding:16px;
     }
   </style>
 </head>
 
 <body>
-  <header>
-    <div class="wrap">
-      <div class="topbar">
-        <div class="title">
-          <h1>Planes de Entrenamiento · Fuerza + Potencia</h1>
-          <div class="subtitle">3 perfiles · 4 sesiones/semana · fútbol + explosión + prevención</div>
+<header>
+  <div class="wrap">
+    <div class="topbar">
+      <div>
+        <h1>Planes de Entrenamiento · Fuerza + Potencia</h1>
+        <div class="subtitle">3 perfiles · 4 días/semana · progreso semanal · timer · notas · progresión</div>
+      </div>
+      <div class="row">
+        <span class="pill" id="profilePill"><span class="dot"></span> Perfil: —</span>
+        <button class="btn ghost" id="switchProfileBtn">Cambiar perfil</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section style="display:grid; gap:14px">
+
+    <!-- Motivación -->
+    <div class="card" id="motivationCard">
+      <div class="banner">
+        <strong class="muted small">Mensaje</strong>
+        <div class="quote" id="motivationText">—</div>
+      </div>
+      <div class="hint row between">
+        <span>Tip: si la velocidad o técnica cae, <b>parás</b>. Calidad primero.</span>
+        <button class="btn" id="newMotivationBtn">Nuevo mensaje</button>
+      </div>
+    </div>
+
+    <!-- Selector de perfil -->
+    <div class="card" id="profileView">
+      <div class="inner">
+        <div class="row between">
+          <div>
+            <div style="font-weight:950;font-size:16px">Elegir usuario</div>
+            <div class="muted small" id="profileInfo" style="margin-top:4px">—</div>
+          </div>
+          <span class="pill"><span class="dot good"></span> Listo</span>
         </div>
+
+        <div class="sep"></div>
+
         <div class="row">
-          <span class="pill" id="profilePill"><span class="dot"></span> Perfil: —</span>
-          <button class="btn ghost" id="switchProfileBtn">Cambiar perfil</button>
+          <select id="profileSelect"></select>
+          <button class="btn primary" id="enterBtn">Entrar</button>
+          <span class="tag">Se guarda en este dispositivo</span>
         </div>
       </div>
     </div>
-  </header>
 
-  <main>
-    <section class="left grid">
-
-      <!-- Mensaje inspirador -->
-      <div class="card soft" id="motivationCard">
-        <div class="banner">
-          <strong class="muted small">Hoy toca</strong>
-          <div class="quote" id="motivationText">—</div>
-        </div>
-        <div class="hint">
-          Consejo: <b>calidad &gt; cantidad</b>. Si baja la técnica o la velocidad, paras y listo.
-        </div>
-      </div>
-
-      <!-- Selector de perfil -->
-      <div class="card" id="profileView">
-        <div class="inner">
-          <div class="row between">
-            <div>
-              <div style="font-weight:900; font-size:16px">Elegir perfil</div>
-              <div class="muted small" id="profileInfo" style="margin-top:4px">—</div>
-            </div>
-            <span class="pill"><span class="dot good"></span> Listo para entrenar</span>
+    <!-- App -->
+    <div class="card hidden" id="appView">
+      <div class="inner">
+        <div class="row between">
+          <div>
+            <div id="planTitle" style="font-weight:950;font-size:18px">—</div>
+            <div id="planSubtitle" class="muted small">—</div>
           </div>
-
-          <div class="sep"></div>
-
           <div class="row">
-            <select id="profileSelect"></select>
-            <button class="btn primary" id="enterBtn">Entrar</button>
-          </div>
-
-          <div class="muted small" style="margin-top:10px">
-            Los checks se guardan en este dispositivo. Tip: si algo no se actualiza, usa <span class="kbd">Ctrl</span> + <span class="kbd">F5</span>.
+            <span class="muted small">Semana</span>
+            <select id="weekSelect"></select>
+            <button class="btn" id="homeBtn">Plan semanal</button>
+            <button class="btn danger" id="resetBtn">Reset semana</button>
           </div>
         </div>
-      </div>
 
-      <!-- App -->
-      <div class="card hidden" id="appView">
-        <div class="inner">
-          <div class="row between">
-            <div>
-              <div style="font-weight:950; font-size:18px" id="planTitle">—</div>
-              <div class="muted small" id="planSubtitle">—</div>
-            </div>
-            <div class="row">
-              <span class="muted small">Semana</span>
-              <select id="weekSelect"></select>
-              <button class="btn" id="homeBtn">Plan semanal</button>
-              <button class="btn danger" id="resetChecksBtn">Reset checks</button>
-            </div>
-          </div>
+        <div class="sep"></div>
 
-          <div class="sep"></div>
+        <!-- HOME -->
+        <div id="homeView"></div>
 
-          <div id="homeView"></div>
+        <!-- SESSION -->
+        <div id="sessionView" class="hidden">
+          <div class="sessionCard">
+            <h3 id="sessionTitle">—</h3>
+            <div class="meta" id="sessionObjective">—</div>
+            <div class="hint" id="progressionHint" style="border-top:none; padding:10px 0 0 0;"></div>
 
-          <div id="sessionView" class="hidden">
-            <div class="sessionCard">
-              <h3 id="sessionTitle">—</h3>
-              <div class="meta" id="sessionObjective">—</div>
-              <div class="hint" id="progressionHint" style="border-top:none; padding:10px 0 0 0;"></div>
-              <div class="actions">
-                <button class="btn" id="backBtn">← Volver</button><button class="btn good" id="completeSessionBtn">✅ Completar sesión</button>
+            <div class="sep"></div>
+
+            <div class="row between">
+              <div class="row">
                 <span class="pill"><span class="dot warn"></span> Parar si hay dolor</span>
+                <span class="tag" id="sessionTimeTag">~60 min</span>
+              </div>
+              <div class="row">
+                <button class="btn good" id="completeSessionBtn">✅ Completar sesión</button>
+                <button class="btn" id="backBtn">← Volver</button>
               </div>
             </div>
+          </div>
 
-            <div class="card" style="margin-top:12px">
-              <div style="padding:0; overflow:hidden">
-                <table>
-                  <thead>
-                    <tr>
-                      <th>✔</th>
-                      <th>Ejercicio</th>
-                      <th>Series</th>
-                      <th>Reps</th>
-                      <th>Descanso</th>
-                      <th>Vídeo</th>
-                    </tr>
-                  </thead>
-                  <tbody id="exerciseTable"></tbody>
-                </table>
-              </div>
+          <div class="card" style="margin-top:12px">
+            <div style="padding:0; overflow:hidden">
+              <table>
+                <thead>
+                  <tr>
+                    <th>✔</th>
+                    <th>Ejercicio + descripción</th>
+                    <th>Series</th>
+                    <th>Reps/tiempo</th>
+                    <th>Descanso</th>
+                    <th>Vídeo</th>
+                  </tr>
+                </thead>
+                <tbody id="exerciseTable"></tbody>
+              </table>
             </div>
+          </div>
 
-            <div class="hint">
-              Regla rápida: fuerza con <b>1–3 reps en reserva</b> (no al fallo). En sprints/saltos: <b>descanso completo</b>.
-            </div>
+          <div class="hint">
+            Fuerza: termina con <b>1–3 reps en reserva</b>. Velocidad/saltos: <b>descanso completo</b>.
           </div>
         </div>
       </div>
+    </div>
 
-      <!-- Error UI (solo si hay error REAL) -->
-      <div class="card hidden" id="errorView">
-        <div class="inner">
-          <div style="font-weight:950; font-size:16px">Ups… algo falló</div>
-          <div class="muted small" id="errorText" style="margin-top:8px"></div>
-          <div class="sep"></div>
-          <div class="muted small">
-            Si ves esto, es un error real de JavaScript. Normalmente se arregla actualizando la página.
+    <!-- Error real -->
+    <div class="card hidden" id="errorView">
+      <div class="inner">
+        <div style="font-weight:950;font-size:16px">Error real en la app</div>
+        <div class="muted small" id="errorText" style="margin-top:8px"></div>
+      </div>
+    </div>
+  </section>
+
+  <aside class="right" style="display:grid; gap:14px">
+    <div class="card">
+      <div class="inner">
+        <div style="font-weight:950;font-size:16px">Panel</div>
+        <div class="muted small" style="margin-top:4px">Progreso y recordatorios.</div>
+
+        <div class="sep"></div>
+
+        <div class="kpi">
+          <div class="box">
+            <div class="val" id="kpiProfile">—</div>
+            <div class="lab">perfil</div>
+          </div>
+          <div class="box">
+            <div class="val" id="kpiWeek">—</div>
+            <div class="lab">semana</div>
+          </div>
+          <div class="box">
+            <div class="val" id="kpiWeeklyPct">—</div>
+            <div class="lab">progreso</div>
+          </div>
+          <div class="box">
+            <div class="val">4</div>
+            <div class="lab">días</div>
           </div>
         </div>
-      </div>
 
-    </section>
+        <div class="sep"></div>
 
-    <aside class="right grid">
-      <div class="card soft">
-        <div class="inner">
-          <div style="font-weight:950; font-size:16px">Panel rápido</div>
-          <div class="muted small" style="margin-top:4px">Resumen y recordatorios.</div>
-
-          <div class="sep"></div>
-
-          <div class="kpi">
-            <div class="box">
-              <div class="val" id="kpiProfile">—</div>
-              <div class="lab">perfil</div>
-            </div>
-            <div class="box">
-              <div class="val" id="kpiWeek">—</div>
-              <div class="lab">semana</div>
-            </div>
-            <div class="box">
-              <div class="val">4</div>
-              <div class="lab">sesiones</div>
-            </div>
-            <div class="box">
-              <div class="val">60'</div>
-              <div class="lab">duración</div>
-            </div>
-          </div>
-
-          <div class="sep"></div>
-
-          <div class="muted small" style="line-height:1.5">
-            <b>Horario recomendado:</b><br>
-            Mañana / mediodía (para llegar fresco al entreno del club).
-          </div>
-
-          <div class="sep"></div>
-
-          <div class="muted small" style="line-height:1.5">
-            <b>Prevención clave:</b> isquios (Nordic), aductor (Copenhagen), tobillo (tibial/gemelo).
-          </div>
-
-          <div class="sep"></div>
-
-          <div class="muted small" style="line-height:1.5">
-            <b>Tip:</b> si un día hay partido exigente, baja volumen de pierna esa semana.
-          </div>
+        <div class="small muted" style="line-height:1.5">
+          <b>Juancho:</b> optimizado para club (L/M/J/V ~18) y partido sábado.<br>
+          <b>Benja:</b> masa + explosión + prevención (mañanas).<br>
+          <b>Gaston:</b> “modo juego”, técnica + fuerza segura.
         </div>
+
       </div>
-    </aside>
+    </div>
+  </aside>
+</main>
+
 <!-- MODAL CRONÓMETRO -->
-<div id="timerModal" class="hidden" style="
-  position:fixed; inset:0; z-index:9999;
-  background:rgba(0,0,0,.55); backdrop-filter: blur(8px);
-  display:flex; align-items:center; justify-content:center; padding:16px;">
+<div id="timerModal">
   <div class="card" style="max-width:520px; width:100%;">
     <div class="inner">
       <div class="row between">
@@ -589,6 +389,7 @@
       <div class="sep"></div>
 
       <div style="font-size:44px; font-weight:950; text-align:center; letter-spacing:.5px" id="timerDisplay">00:00</div>
+
       <div class="row" style="justify-content:center; margin-top:10px">
         <button class="btn" id="timerStartBtn">▶ Iniciar</button>
         <button class="btn" id="timerPauseBtn">⏸ Pausa</button>
@@ -611,735 +412,798 @@
   </div>
 </div>
 
-  </main>
+<script>
+(() => {
+  // ============================
+  // ESTADO
+  // ============================
+  let ACTIVE_PROFILE = null;
+  let ACTIVE_SESSION_ID = null;
 
-  <!-- ========================================================= -->
-  <!--  SCRIPT PRINCIPAL                                         -->
-  <!-- ========================================================= -->
-  <script>
-  (() => {
+  // ============================
+  // MOTIVACIÓN
+  // ============================
+  const MOTIVATION = [
+    "Disciplina > motivación. Hoy sumas una victoria silenciosa.",
+    "Pequeñas mejoras cada día = resultados enormes en meses.",
+    "Entrena como quieres jugar: fuerte, rápido y valiente.",
+    "No compitas con otros: compite con tu versión de ayer.",
+    "Calidad primero. Cada repetición cuenta.",
+    "Cuando no apetece… es cuando más vale hacerlo.",
+    "Tu futuro jugador empieza con tu esfuerzo de hoy.",
+    "El talento abre puertas. La constancia las mantiene abiertas.",
+    "Acelera con la mente, explota con el cuerpo.",
+    "El trabajo bien hecho se nota el sábado."
+  ];
 
-    /* ========================================================= */
-    /*  CONFIG                                                   */
-    /* ========================================================= */
+  // ============================
+  // PERFILES
+  // ============================
+  const PROFILES = {
+    juancho: {
+      name: "JUANCHO",
+      info: "15 años · Cadete autonómico · Velocidad + explosión sin perder masa"
+    },
+    benja: {
+      name: "BENJA",
+      info: "17 años · 182cm · 65kg · Masa muscular + explosión + prevención (mañanas libres)"
+    },
+    gaston: {
+      name: "GASTON",
+      info: "9 años · 143cm · 38kg · Coordinación + velocidad + fuerza básica segura"
+    }
+  };
 
-    // Por estabilidad: NO registramos service worker por defecto.
-    // Si algún día lo quieres, cambia a true y asegúrate de tener sw.js bien hecho.
-    const ENABLE_SW = false;
+  // ============================
+  // HELPERS EJERCICIO
+  // ============================
+  function ex(id, name, desc, sets, reps, rest, url, keys, errors){
+    return { id, name, desc, sets, reps, rest, url, keys, errors };
+  }
 
-    /* ========================================================= */
-    /*  ESTADO GLOBAL (evita ReferenceError)                      */
-    /* ========================================================= */
-
-    let ACTIVE_PROFILE = null;
-    let ACTIVE_PLAN = null;
-
-    /* ========================================================= */
-    /*  MENSAJES INSPIRADORES (10)                                */
-    /* ========================================================= */
-
-    const MOTIVATION = [
-      "Disciplina > motivación. Hoy sumas una victoria silenciosa.",
-      "Pequeñas mejoras cada día = resultados enormes en meses.",
-      "Entrena como quieres jugar: fuerte, rápido y valiente.",
-      "No compitas con otros: compite con tu versión de ayer.",
-      "Calidad primero. Cada repetición cuenta.",
-      "Cuando no apetece… es cuando más vale hacerlo.",
-      "Tu futuro jugador empieza con tu esfuerzo de hoy.",
-      "El talento abre puertas. La constancia las mantiene abiertas.",
-      "Acelera con la mente, explota con el cuerpo.",
-      "El trabajo bien hecho se nota el sábado."
-    ];
-
-    /* ========================================================= */
-    /*  PERFILES                                                 */
-    /* ========================================================= */
-
-    const PROFILES = {
-      juancho: {
-        name: "JUANCHO",
-        info: "Fútbol · Plan potente y equilibrado",
-        plan: "A"
-      },
-      benja: {
-        name: "BENJA",
-        info: "17 años · 182 cm · 65 kg · Masa + explosión + prevención (mañanas)",
-        plan: "B"
-      },
-      gaston: {
-        name: "GASTON",
-        info: "9 años · 143 cm · 38 kg · Coordinación + velocidad + fuerza básica (seguro)",
-        plan: "C"
-      }
-    };
-
-    /* ========================================================= */
-    /*  PLANES                                                   */
-    /*  (4 sesiones por perfil)                                  */
-    /* ========================================================= */
-
-    // -------------------------
-    // PLAN A (JUANCHO)
-    // -------------------------
-    const PLAN_A = [
+  // ============================
+  // PLANES (4 días por perfil)
+  // ============================
+  const PLANS = {
+    juancho: [
       {
-        id: "mon",
-        title: "Lunes · Fuerza base + potencia",
-        objective: "Fuerza general + conversión a potencia (salto/sprint).",
-        exercises: [
-          { id:"box", name:"Saltos al cajón", sets:"4", reps:"3", rest:"90s", url:"https://www.youtube.com/watch?v=52r_Ul5k03g" },
-          { id:"sq",  name:"Sentadilla con barra", sets:"4", reps:"4–5", rest:"2–3m", url:"https://www.youtube.com/watch?v=ultWZbUMPL8" },
-          { id:"ht",  name:"Hip Thrust", sets:"3", reps:"5–6", rest:"2m", url:"https://www.youtube.com/watch?v=LM8XHLYJoYs" },
-          { id:"rdl", name:"Peso muerto rumano", sets:"3", reps:"6–8", rest:"2m", url:"https://www.youtube.com/watch?v=2SHsk9AzdjA" },
-          { id:"mb",  name:"Balón medicinal (pecho)", sets:"3", reps:"5", rest:"60–90s", url:"https://www.youtube.com/watch?v=V8g6dXKjN5A" }
+        id:"mon", dayLabel:"Lunes", title:"Fuerza + potencia (pierna)",
+        objective:"Base de fuerza + transferir a salto/sprint (sin fatigar para el club).",
+        approx:"55–60 min",
+        exercises:[
+          ex("mob","Movilidad dinámica (cadera/tobillo)","Movilidad suave, sin dolor. 60–90s por zona.","—","5–6 min","—","https://www.youtube.com/watch?v=2L2lnxIcNmo",
+             "Rango sin dolor. Respira. Movimientos controlados.","Apurar y rebotar, dolor en rodilla/tobillo."),
+          ex("act","Activación glúteo + core","Monster walks + dead bug suave. Activar, no quemar.","2","10–12","30–45s","https://www.youtube.com/watch?v=0a6yJv6u5RQ",
+             "Tensión en glúteo, cintura estable.","Caderas se giran, banda muy floja."),
+          ex("box","Saltos al cajón","Saltos explosivos. Aterriza suave, rodilla alineada.","4","3","90s","https://www.youtube.com/watch?v=52r_Ul5k03g",
+             "Pocos y perfectos. Caída silenciosa.","Hacer muchos y perder altura/técnica."),
+          ex("sq","Sentadilla con barra","Fuerte y técnico. 1–2 reps en reserva.","4","4–5","2–3m","https://www.youtube.com/watch?v=ultWZbUMPL8",
+             "Espalda neutra. Rodilla acompaña pie.","Rebotar abajo, talones se levantan."),
+          ex("ht","Hip thrust","Glúteo potente para aceleración.","3","5–6","2m","https://www.youtube.com/watch?v=LM8XHLYJoYs",
+             "Pausa 1s arriba, pelvis neutra.","Hiperextender lumbar."),
+          ex("rdl","Peso muerto rumano","Isquios fuertes = sprint + prevención.","3","6–8","2m","https://www.youtube.com/watch?v=2SHsk9AzdjA",
+             "Bisagra de cadera, barra cerca.","Redondear espalda, bajar de más."),
+          ex("mb","Balón medicinal (pecho)","Lanzamiento explosivo contra pared.","3","5","60–90s","https://www.youtube.com/watch?v=V8g6dXKjN5A",
+             "Explosivo, sin arquear espalda.","Lanzar lento, compensar con lumbar."),
+          ex("cool","Vuelta a la calma","Respiración + estiramiento suave.","—","5 min","—","https://www.youtube.com/watch?v=YlEr7G8c2Dk",
+             "Bajar pulsaciones.","Estirar fuerte con dolor.")
         ]
       },
       {
-        id: "tue",
-        title: "Martes · Velocidad + pliometría",
-        objective: "Aceleración y reactividad (calidad > cantidad).",
-        exercises: [
-          { id:"pogo", name:"Pogos reactivos", sets:"3", reps:"15–20", rest:"60s", url:"https://www.youtube.com/watch?v=R1JYx6zJ2Ys" },
-          { id:"bounds", name:"Bounds", sets:"4", reps:"20–25 m", rest:"90s", url:"https://www.youtube.com/watch?v=9jP5ZL5D6Y0" },
-          { id:"sprint", name:"Sprint 10–20 m", sets:"6", reps:"1", rest:"2–3m", url:"https://www.youtube.com/watch?v=YkqvJvGz5gM" },
-          { id:"ladder", name:"Escalera agilidad", sets:"2", reps:"4 patrones", rest:"60s", url:"https://www.youtube.com/watch?v=R5JpU9JmG8k" }
+        id:"tue", dayLabel:"Martes", title:"Velocidad + pliometría + cardio suave",
+        objective:"Aceleración (10–20m) + reactividad. Termina con cardio suave para recuperar.",
+        approx:"55–60 min",
+        exercises:[
+          ex("warm","Calentamiento carrera","Trote suave + skipping + talones.","—","8–10 min","—","https://www.youtube.com/watch?v=2L2lnxIcNmo",
+             "Subir temperatura. Técnica ligera.","Arrancar a tope sin calentar."),
+          ex("pogo","Pogos reactivos","Rebotes cortos, poco tiempo en suelo.","3","15–20","60s","https://www.youtube.com/watch?v=R1JYx6zJ2Ys",
+             "Tobillo rígido, torso alto.","Flexionar mucho rodilla y perder rebote."),
+          ex("bounds","Bounds","Potencia horizontal. Zancada elástica.","4","20–25m","90s","https://www.youtube.com/watch?v=9jP5ZL5D6Y0",
+             "Empujar el suelo, mantener ritmo.","Caer pesado, perder coordinación."),
+          ex("sprint","Sprints 10–20m","Máxima calidad. Descanso completo.","6","1","2–3m","https://www.youtube.com/watch?v=YkqvJvGz5gM",
+             "Salida agresiva, técnica limpia.","Hacerlos fatigado y más lento."),
+          ex("lad","Escalera agilidad","4 patrones simples.","2","4 patrones","60s","https://www.youtube.com/watch?v=R5JpU9JmG8k",
+             "Pies rápidos, postura estable.","Mirar al suelo y encorvarse."),
+          ex("z2","Cardio Z2 (bici/spinning)","Suave: puedes hablar.","—","12–15 min","—","https://www.youtube.com/watch?v=R5m8p3E4b2c",
+             "Recuperación activa.","Pasarte de intensidad."),
+          ex("cool","Vuelta a la calma","Respirar + movilidad suave.","—","4–5 min","—","https://www.youtube.com/watch?v=YlEr7G8c2Dk",
+             "Soltar tensión.","Cortar en seco.")
         ]
       },
       {
-        id: "thu",
-        title: "Jueves · Unilateral + prevención",
-        objective: "Fuerza por pierna + prevención isquios/aductor.",
-        exercises: [
-          { id:"bulg", name:"Split squat búlgaro", sets:"3", reps:"5/pierna", rest:"2m", url:"https://www.youtube.com/watch?v=2C-uNgKwPLE" },
-          { id:"step", name:"Step-up explosivo", sets:"3", reps:"4/pierna", rest:"90s", url:"https://www.youtube.com/watch?v=9LIAhxQHmak" },
-          { id:"nordic", name:"Nordic curl", sets:"2–3", reps:"3–5", rest:"2–3m", url:"https://www.youtube.com/watch?v=4b6G2P0wC5I" },
-          { id:"coph", name:"Copenhagen (aductor)", sets:"2", reps:"20–30s/lado", rest:"60–90s", url:"https://www.youtube.com/watch?v=1n9uG8f6u9k" }
+        id:"thu", dayLabel:"Jueves", title:"Unilateral + prevención + core",
+        objective:"Equilibrar piernas, prevenir lesiones y mantener potencia sin reventarse.",
+        approx:"55–60 min",
+        exercises:[
+          ex("mob","Movilidad + activación","Cadera/tobillo + banda glúteo medio.","—","8 min","—","https://www.youtube.com/watch?v=0a6yJv6u5RQ",
+             "Activar sin fatigar.","Banda muy ligera, no siente glúteo."),
+          ex("bulg","Split squat búlgaro","Pierna a pierna. Control.","3","5/pierna","2m","https://www.youtube.com/watch?v=2C-uNgKwPLE",
+             "Rodilla alineada, tronco estable.","Caer hacia adentro."),
+          ex("step","Step-up explosivo","Sube rápido, baja controlado.","3","4/pierna","90s","https://www.youtube.com/watch?v=9LIAhxQHmak",
+             "Impulsar desde la pierna de apoyo.","Empujar con la de atrás."),
+          ex("nord","Nordic curl","Prevención isquios. Poco volumen.","2–3","3–5","2–3m","https://www.youtube.com/watch?v=4b6G2P0wC5I",
+             "Control, rango progresivo.","Bajar de golpe y tironear isquio."),
+          ex("coph","Copenhagen","Aductor fuerte.","2","20–30s/lado","60–90s","https://www.youtube.com/watch?v=1n9uG8f6u9k",
+             "Cadera alta y estable.","Cadera cae y duele la ingle."),
+          ex("core","Pallof press","Anti-rotación.","3","10–12/lado","60s","https://www.youtube.com/watch?v=I7bqH2b4ZzQ",
+             "Costillas abajo, tronco firme.","Girar el cuerpo en vez de resistir."),
+          ex("cool","Vuelta a la calma","Soltar + respirar.","—","4–5 min","—","https://www.youtube.com/watch?v=YlEr7G8c2Dk",
+             "Bajar tensión.","Estirar agresivo.")
         ]
       },
       {
-        id: "sat",
-        title: "Sábado · Activación pre-partido",
-        objective: "Activar sistema nervioso sin fatiga.",
-        exercises: [
-          { id:"bands", name:"Activación con gomas", sets:"2", reps:"10–12", rest:"30s", url:"https://www.youtube.com/watch?v=0a6yJv6u5RQ" },
-          { id:"react", name:"Saltos reactivos", sets:"3", reps:"3", rest:"60–90s", url:"https://www.youtube.com/watch?v=R1JYx6zCC16g" },
-          { id:"s10", name:"Sprint 5–10 m", sets:"4", reps:"1", rest:"90s", url:"https://www.youtube.com/watch?v=J1xN3O1tEJk" },
-          { id:"cod", name:"Cambios de dirección", sets:"3", reps:"3", rest:"60–90s", url:"https://www.youtube.com/watch?v=3Zf7U0sP9kM" }
-        ]
-      }
-    ];
-
-    // -------------------------
-    // PLAN B (BENJA)
-    // -------------------------
-    const PLAN_B = [
-      {
-        id: "mon",
-        title: "Lunes · Pierna (masa) + potencia",
-        objective: "Ganar masa en tren inferior + potencia (salto/sprint).",
-        exercises: [
-          { id:"box", name:"Saltos al cajón", sets:"4", reps:"3", rest:"90s", url:"https://www.youtube.com/watch?v=52r_Ul5k03g" },
-          { id:"sq",  name:"Sentadilla con barra", sets:"4", reps:"6", rest:"2–3m", url:"https://www.youtube.com/watch?v=ultWZbUMPL8" },
-          { id:"ht",  name:"Hip Thrust", sets:"4", reps:"8", rest:"2m", url:"https://www.youtube.com/watch?v=LM8XHLYJoYs" },
-          { id:"rdl", name:"Peso muerto rumano (RDL)", sets:"3", reps:"8", rest:"2m", url:"https://www.youtube.com/watch?v=2SHsk9AzdjA" },
-          { id:"calf",name:"Gemelos", sets:"3", reps:"10–12", rest:"60–90s", url:"https://www.youtube.com/watch?v=YMmgqO8Jo-k" }
-        ]
-      },
-      {
-        id: "tue",
-        title: "Martes · Tren superior (masa) + core",
-        objective: "Ganar masa arriba sin interferir con fútbol.",
-        exercises: [
-          { id:"mb", name:"Balón medicinal (pecho) contra pared", sets:"4", reps:"5", rest:"60–90s", url:"https://www.youtube.com/watch?v=V8g6dXKjN5A" },
-          { id:"bench", name:"Press banca", sets:"4", reps:"6–8", rest:"2–3m", url:"https://www.youtube.com/watch?v=rT7DgCr-3pg" },
-          { id:"pull", name:"Dominadas", sets:"4", reps:"6–8", rest:"2–3m", url:"https://www.youtube.com/watch?v=eGo4IYlbE5g" },
-          { id:"row", name:"Remo (barra/mancuerna)", sets:"3", reps:"8–10", rest:"90–120s", url:"https://www.youtube.com/watch?v=vT2GjY_Umpw" },
-          { id:"pall", name:"Pallof press (elástico)", sets:"3", reps:"10–12/lado", rest:"60s", url:"https://www.youtube.com/watch?v=I7bqH2b4ZzQ" }
-        ]
-      },
-      {
-        id: "thu",
-        title: "Jueves · Unilateral + prevención + aceleración",
-        objective: "Prevención (isquios/aductor/tobillo) + chispa.",
-        exercises: [
-          { id:"sprint", name:"Sprint 10–20 m", sets:"6", reps:"1", rest:"2–3m", url:"https://www.youtube.com/watch?v=YkqvJvGz5gM" },
-          { id:"bulg", name:"Split squat búlgaro", sets:"3", reps:"8/pierna", rest:"2m", url:"https://www.youtube.com/watch?v=2C-uNgKwPLE" },
-          { id:"nordic", name:"Nordic curl", sets:"3", reps:"3–5", rest:"2–3m", url:"https://www.youtube.com/watch?v=4b6G2P0wC5I" },
-          { id:"coph", name:"Copenhagen (aductor)", sets:"2–3", reps:"20–30s/lado", rest:"60–90s", url:"https://www.youtube.com/watch?v=1n9uG8f6u9k" },
-          { id:"tib", name:"Tibial raises", sets:"2", reps:"15–20", rest:"45–60s", url:"https://www.youtube.com/watch?v=6C9Yp1m8wYw" }
-        ]
-      },
-      {
-        id: "sat",
-        title: "Sábado · Activación pre-partido",
-        objective: "Activar articulaciones + sistema nervioso sin fatiga.",
-        exercises: [
-          { id:"bands", name:"Activación con gomas", sets:"2", reps:"10–12", rest:"30s", url:"https://www.youtube.com/watch?v=0a6yJv6u5RQ" },
-          { id:"react", name:"Saltos reactivos", sets:"3", reps:"3", rest:"60–90s", url:"https://www.youtube.com/watch?v=R1JYx6zCC16g" },
-          { id:"s10", name:"Sprint 5–10 m", sets:"4", reps:"1", rest:"90s", url:"https://www.youtube.com/watch?v=J1xN3O1tEJk" },
-          { id:"cod", name:"Cambios de dirección cortos", sets:"3", reps:"3", rest:"60–90s", url:"https://www.youtube.com/watch?v=3Zf7U0sP9kM" }
+        id:"sat", dayLabel:"Sábado", title:"Activación pre-partido (chispa)",
+        objective:"Activar SNC y articulaciones sin fatiga. Ideal 45–70 min antes del partido.",
+        approx:"45–60 min",
+        exercises:[
+          ex("warm","Movilidad + trote suave","Movilidad general + trote 5–6 min.","—","8–10 min","—","https://www.youtube.com/watch?v=2L2lnxIcNmo",
+             "Entrar en calor suave.","Llegar frío al sprint."),
+          ex("band","Band activation","Glúteo medio + cadera.","2","10–12","30s","https://www.youtube.com/watch?v=0a6yJv6u5RQ",
+             "Sensación de ‘encendido’.","Fatigar con mil repeticiones."),
+          ex("react","Saltos reactivos","Pocos, explosivos.","3","3","60–90s","https://www.youtube.com/watch?v=R1JYx6zJ2Ys",
+             "Explosión y frescura.","Convertirlo en cardio."),
+          ex("s10","Sprints 5–10m","Arranques rápidos.","4","1","90s","https://www.youtube.com/watch?v=J1xN3O1tEJk",
+             "Descanso completo.","Hacerlos cansado."),
+          ex("cod","COD corto","Técnico, sin quemarte.","3","2–3","60–90s","https://www.youtube.com/watch?v=3Zf7U0sP9kM",
+             "Frenar bajo control.","Rodilla colapsa hacia dentro."),
+          ex("finish","Balón 2–3 min","Toques suaves, ‘sentir’ balón.","—","2–3 min","—","https://www.youtube.com/watch?v=8lQvKq1iDkQ",
+             "Conectar con el juego.","Llegar agitado.")
         ]
       }
-    ];
+    ],
 
-    // -------------------------
-    // PLAN C (GASTON, 9 años)
-    // -------------------------
-    const PLAN_C = [
+    benja: [
       {
-        id: "mon",
-        title: "Lunes · Coordinación + fuerza básica (9 años)",
-        objective: "Moverse bien + fuerza básica segura (sin cargas pesadas).",
-        exercises: [
-          { id:"ladder", name:"Escalera agilidad (juego)", sets:"3", reps:"3–4 patrones", rest:"45–60s", url:"https://www.youtube.com/watch?v=R5JpU9JmG8k" },
-          { id:"squat",  name:"Sentadilla peso corporal", sets:"3", reps:"10–12", rest:"60s", url:"https://www.youtube.com/watch?v=aclHkVaku9U" },
-          { id:"push",   name:"Flexiones (en banco si hace falta)", sets:"3", reps:"6–10", rest:"60–90s", url:"https://www.youtube.com/watch?v=IODxDxX7oi4" },
-          { id:"hang",   name:"Colgarse en barra / dominada asistida", sets:"3", reps:"20–30s", rest:"60s", url:"https://www.youtube.com/watch?v=eGo4IYlbE5g" },
-          { id:"plank",  name:"Plancha", sets:"3", reps:"20–30s", rest:"60s", url:"https://www.youtube.com/watch?v=pSHjTRCQxIw" }
+        id:"mon", dayLabel:"Lunes", title:"Pierna (masa) + potencia",
+        objective:"Hipertrofia inteligente + chispa (sin destruirlo).",
+        approx:"55–60 min",
+        exercises:[
+          ex("warm","Bici + movilidad","Bici 5 min + movilidad cadera/tobillo.","—","8–10 min","—","https://www.youtube.com/watch?v=2L2lnxIcNmo",
+             "Subir temperatura.","Arrancar pesado en frío."),
+          ex("jump","Saltos al cajón","Potencia primero. Pocos y perfectos.","4","3","90s","https://www.youtube.com/watch?v=52r_Ul5k03g",
+             "Altura segura, técnica.","Fatiga y mala caída."),
+          ex("sq","Sentadilla con barra","Masa: control + rango.","4","6","2–3m","https://www.youtube.com/watch?v=ultWZbUMPL8",
+             "Ritmo controlado.","Rebotar y perder postura."),
+          ex("ht","Hip thrust","Glúteo grande y fuerte.","4","8","2m","https://www.youtube.com/watch?v=LM8XHLYJoYs",
+             "Pausa arriba 1s.","Hiperextender lumbar."),
+          ex("rdl","RDL","Isquio fuerte.","3","8","2m","https://www.youtube.com/watch?v=2SHsk9AzdjA",
+             "Barra pegada, bisagra.","Doblar espalda."),
+          ex("calf","Gemelos","Tobillo fuerte.","3","10–12","60–90s","https://www.youtube.com/watch?v=YMmgqO8Jo-k",
+             "Rango completo.","Rebotar sin control."),
+          ex("cool","Vuelta a la calma","Respirar + estirar suave.","—","4–5 min","—","https://www.youtube.com/watch?v=YlEr7G8c2Dk",
+             "Bajar pulsaciones.","Salir sin soltar.")
         ]
       },
       {
-        id: "tue",
-        title: "Martes · Velocidad corta + saltos suaves",
-        objective: "Ser más rápido con técnica y sin cansarse demasiado.",
-        exercises: [
-          { id:"s5",   name:"Sprints 5–10 m (salidas)", sets:"6", reps:"1", rest:"60–90s", url:"https://www.youtube.com/watch?v=J1xN3O1tEJk" },
-          { id:"pogo", name:"Pogos suaves", sets:"3", reps:"10–15", rest:"60s", url:"https://www.youtube.com/watch?v=R1JYx6zCC16g" },
-          { id:"step", name:"Saltos en escalón bajo (subo-bajo)", sets:"3", reps:"6–8", rest:"60–90s", url:"https://www.youtube.com/watch?v=52r_Ul5k03g" },
-          { id:"mb",   name:"Balón medicinal ligero (lanzar)", sets:"3", reps:"6", rest:"60s", url:"https://www.youtube.com/watch?v=V8g6dXKjN5A" }
+        id:"tue", dayLabel:"Martes", title:"Tren superior (masa) + core",
+        objective:"Ganar masa arriba + estabilidad del tronco.",
+        approx:"55–60 min",
+        exercises:[
+          ex("warm","Activación hombro/escápula","Band pull-aparts + movilidad.","—","8 min","—","https://www.youtube.com/watch?v=3w8yQm3gJ8c",
+             "Escápulas activas.","Hombros hacia orejas."),
+          ex("bench","Press banca","Masa: no al fallo.","4","6–8","2–3m","https://www.youtube.com/watch?v=rT7DgCr-3pg",
+             "Pies firmes, control.","Rebotar barra en pecho."),
+          ex("pull","Dominadas","6–8 reps controladas.","4","6–8","2–3m","https://www.youtube.com/watch?v=eGo4IYlbE5g",
+             "Pecho a barra si puede.","Balanceo excesivo."),
+          ex("row","Remo","Espalda fuerte.","3","8–10","90–120s","https://www.youtube.com/watch?v=vT2GjY_Umpw",
+             "Codo atrás, torso estable.","Tirar con bíceps solo."),
+          ex("mb","Med ball chest pass","Potencia tren superior.","4","5","60–90s","https://www.youtube.com/watch?v=V8g6dXKjN5A",
+             "Explosivo y corto.","Lanzar lento."),
+          ex("pall","Pallof press","Anti-rotación.","3","10–12/lado","60s","https://www.youtube.com/watch?v=I7bqH2b4ZzQ",
+             "Core firme.","Rotar el tronco."),
+          ex("cool","Vuelta a la calma","Movilidad torácica + respiración.","—","4–5 min","—","https://www.youtube.com/watch?v=YlEr7G8c2Dk",
+             "Soltar tensión.","Cortar en seco.")
         ]
       },
       {
-        id: "thu",
-        title: "Jueves · Prevención + cambios de dirección",
-        objective: "Rodilla/tobillo fuertes + frenar y salir mejor.",
-        exercises: [
-          { id:"bands", name:"Gomas (glúteo medio) caminata lateral", sets:"2–3", reps:"10–12/lado", rest:"30–45s", url:"https://www.youtube.com/watch?v=0a6yJv6u5RQ" },
-          { id:"cod",   name:"Cambios dirección cortos (con conos)", sets:"4", reps:"2–3", rest:"60–90s", url:"https://www.youtube.com/watch?v=3Zf7U0sP9kM" },
-          { id:"calf",  name:"Gemelos", sets:"2–3", reps:"12–15", rest:"45–60s", url:"https://www.youtube.com/watch?v=YMmgqO8Jo-k" },
-          { id:"tib",   name:"Tibial raises", sets:"2", reps:"12–15", rest:"45–60s", url:"https://www.youtube.com/watch?v=6C9Yp1m8wYw" },
-          { id:"side",  name:"Plancha lateral", sets:"2–3", reps:"15–25s/lado", rest:"60s", url:"https://www.youtube.com/watch?v=K2VljzCC16g" }
+        id:"thu", dayLabel:"Jueves", title:"Prevención + aceleración (chispa)",
+        objective:"Velocidad + blindaje isquio/aductor/tibial.",
+        approx:"55–60 min",
+        exercises:[
+          ex("warm","Calentamiento carrera","Trote + técnica (A-skips).","—","8–10 min","—","https://www.youtube.com/watch?v=2L2lnxIcNmo",
+             "Preparar para sprint.","Arrancar a tope sin calentar."),
+          ex("sprint","Sprints 10–20m","Máxima calidad.","6","1","2–3m","https://www.youtube.com/watch?v=YkqvJvGz5gM",
+             "Descanso completo.","Hacerlos fatigado."),
+          ex("bulg","Búlgaro","Masa unilateral + estabilidad.","3","8/pierna","2m","https://www.youtube.com/watch?v=2C-uNgKwPLE",
+             "Rodilla alineada.","Caer hacia dentro."),
+          ex("nord","Nordic curl","Isquio fuerte.","3","3–5","2–3m","https://www.youtube.com/watch?v=4b6G2P0wC5I",
+             "Rango progresivo.","Tirón brusco."),
+          ex("coph","Copenhagen","Aductor fuerte.","2–3","20–30s/lado","60–90s","https://www.youtube.com/watch?v=1n9uG8f6u9k",
+             "Cadera alta.","Dolor agudo en ingle."),
+          ex("tib","Tibial raises","Tobillo/rodilla.","2","15–20","45–60s","https://www.youtube.com/watch?v=6C9Yp1m8wYw",
+             "Control y rango.","Rebotar sin control."),
+          ex("cool","Vuelta a la calma","Respirar + soltar piernas.","—","4–5 min","—","https://www.youtube.com/watch?v=YlEr7G8c2Dk",
+             "Recuperar.","Salir sin soltar.")
         ]
       },
       {
-        id: "sat",
-        title: "Sábado · Activación (modo partido)",
-        objective: "Activación rápida y divertida, sin fatiga.",
-        exercises: [
-          { id:"warm", name:"Trote suave + movilidad", sets:"1", reps:"6–8 min", rest:"—", url:"https://www.youtube.com/watch?v=2L2lnxIcNmo" },
-          { id:"lad2", name:"Escalera agilidad (rápido)", sets:"2–3", reps:"3 patrones", rest:"45–60s", url:"https://www.youtube.com/watch?v=R5JpU9JmG8k" },
-          { id:"s52",  name:"Sprints 5–10 m", sets:"4", reps:"1", rest:"60–90s", url:"https://www.youtube.com/watch?v=J1xN3O1tEJk" },
-          { id:"jump", name:"Saltos reactivos suaves", sets:"2", reps:"3", rest:"60s", url:"https://www.youtube.com/watch?v=R1JYx6zCC16g" }
+        id:"sat", dayLabel:"Sábado", title:"Cardio Z2 + movilidad (recuperación)",
+        objective:"Mejorar recuperación y base aeróbica sin machacar piernas.",
+        approx:"55–60 min",
+        exercises:[
+          ex("z2","Cardio Z2 (bici/spinning)","RPE 3–4/10. Conversación posible.","—","35–40 min","—","https://www.youtube.com/watch?v=R5m8p3E4b2c",
+             "Constante, sin picos.","Ir demasiado fuerte."),
+          ex("mob","Movilidad cadera/tobillo","Suave y controlado.","—","10–12 min","—","https://www.youtube.com/watch?v=2L2lnxIcNmo",
+             "Rango sin dolor.","Forzar."),
+          ex("core","Core suave","Dead bug + plancha lateral.","2","8–10 + 20s","45–60s","https://www.youtube.com/watch?v=pSHjTRCQxIw",
+             "Calidad.","Fatigarse demasiado."),
+          ex("breath","Respiración","Bajar pulsaciones.","—","3–5 min","—","https://www.youtube.com/watch?v=YlEr7G8c2Dk",
+             "Relajar.","Cortar rápido.")
         ]
       }
-    ];
+    ],
 
-    /* ========================================================= */
-    /*  UTIL: obtener plan por perfil                              */
-    /* ========================================================= */
-
-    function getPlan(profileId){
-      const p = PROFILES[profileId];
-      if (!p) return PLAN_A;
-      if (p.plan === "A") return PLAN_A;
-      if (p.plan === "B") return PLAN_B;
-      return PLAN_C;
-    }
-
-    /* ========================================================= */
-    /*  STORAGE KEYS (perfil + semana)                             */
-    /* ========================================================= */
-
-    function getActiveProfile(){
-      return localStorage.getItem("activeProfile") || "";
-    }
-
-    function setActiveProfile(id){
-      localStorage.setItem("activeProfile", id);
-    }
-
-    function weekKey(profile){
-      return `mpwa_${profile}_week`;
-    }
-
-    function getWeek(profile){
-      return Number(localStorage.getItem(weekKey(profile)) || "1");
-    }
-
-    function setWeek(profile, w){
-      localStorage.setItem(weekKey(profile), String(w));
-    }
-
-    function checkKey(profile, week, sessionId, exId){
-      return `mpwa_${profile}_check_w${week}_${sessionId}_${exId}`;
-    }
-
-    /* ========================================================= */
-    /*  DOM helpers                                               */
-    /* ========================================================= */
-
-    const $ = (id) => document.getElementById(id);
-
-    function safeShowError(msg){
-      const ev = $("errorView");
-      const et = $("errorText");
-      if (ev && et){
-        et.textContent = msg;
-        ev.classList.remove("hidden");
-      } else {
-        alert(msg);
+    gaston: [
+      {
+        id:"mon", dayLabel:"Lunes", title:"Coordinación + fuerza básica (juego)",
+        objective:"Moverse bien y fuerte sin cargas pesadas. Divertido y seguro.",
+        approx:"50–60 min",
+        exercises:[
+          ex("warm","Juego + movilidad","Saltitos + movilidad tobillo/cadera.","—","8–10 min","—","https://www.youtube.com/watch?v=2L2lnxIcNmo",
+             "Calentar jugando.","Empezar sin calentar."),
+          ex("lad","Escalera agilidad","3–4 patrones simples.","3","3–4 patrones","45–60s","https://www.youtube.com/watch?v=R5JpU9JmG8k",
+             "Rápido y divertido.","Tropezar por ir sin control."),
+          ex("squat","Sentadilla peso corporal","Rodilla alineada.","3","10–12","60s","https://www.youtube.com/watch?v=aclHkVaku9U",
+             "Espalda neutra.","Rodillas se meten."),
+          ex("push","Flexiones (en banco si hace falta)","Técnica primero.","3","6–10","60–90s","https://www.youtube.com/watch?v=IODxDxX7oi4",
+             "Cuerpo recto.","Cadera cae."),
+          ex("hang","Colgarse barra","Agarre + espalda.","3","20–30s","60s","https://www.youtube.com/watch?v=eGo4IYlbE5g",
+             "Juego, sin dolor.","Balanceo excesivo."),
+          ex("plank","Plancha","Firme y corto.","3","20–30s","60s","https://www.youtube.com/watch?v=pSHjTRCQxIw",
+             "Cadera neutra.","Cadera muy alta/baja."),
+          ex("cool","Vuelta a la calma","Respirar + estirar suave.","—","4–5 min","—","https://www.youtube.com/watch?v=YlEr7G8c2Dk",
+             "Bajar revoluciones.","Cortar de golpe.")
+        ]
+      },
+      {
+        id:"tue", dayLabel:"Martes", title:"Velocidad corta + saltos suaves",
+        objective:"Arranques rápidos con técnica + coordinación.",
+        approx:"50–60 min",
+        exercises:[
+          ex("warm","Calentar corriendo","Trote suave + skipping.","—","8–10 min","—","https://www.youtube.com/watch?v=2L2lnxIcNmo",
+             "Preparar cuerpo.","Arrancar a lo loco."),
+          ex("s10","Sprints 5–10m","Salidas, sin cansarse.","6","1","60–90s","https://www.youtube.com/watch?v=J1xN3O1tEJk",
+             "Rápido pero fresco.","Hacerlos agotado."),
+          ex("pogo","Pogos suaves","Rebote corto y controlado.","3","10–15","60s","https://www.youtube.com/watch?v=R1JYx6zJ2Ys",
+             "Control.","Muchos y mal."),
+          ex("mb","Balón medicinal ligero","Lanzar con intención.","3","6","60s","https://www.youtube.com/watch?v=V8g6dXKjN5A",
+             "Explosivo y divertido.","Lanzar lento."),
+          ex("game","Juego COD","Con conos: pilla-pilla 4x20s.","4","20s","60s","https://www.youtube.com/watch?v=3Zf7U0sP9kM",
+             "Divertido.","Exceso de fatiga."),
+          ex("cool","Vuelta a la calma","Respirar + movilidad.","—","4–5 min","—","https://www.youtube.com/watch?v=YlEr7G8c2Dk",
+             "Bajar pulsaciones.","Cortar seco.")
+        ]
+      },
+      {
+        id:"thu", dayLabel:"Jueves", title:"Prevención + técnica con balón",
+        objective:"Base fuerte para jugar más y lesionarse menos.",
+        approx:"50–60 min",
+        exercises:[
+          ex("warm","Movilidad + activación","Cadera/tobillo + band glúteo.","—","8–10 min","—","https://www.youtube.com/watch?v=0a6yJv6u5RQ",
+             "Activar.","Fatigar."),
+          ex("tib","Tibial raises","Tobillo fuerte.","2","12–15","45–60s","https://www.youtube.com/watch?v=6C9Yp1m8wYw",
+             "Control.","Rebotar."),
+          ex("calf","Gemelos","Prevención.","2–3","12–15","45–60s","https://www.youtube.com/watch?v=YMmgqO8Jo-k",
+             "Rango completo.","Acortar rango."),
+          ex("side","Plancha lateral","Core lateral.","2–3","15–25s/lado","60s","https://www.youtube.com/watch?v=K2VljzCC16g",
+             "Cadera alta.","Cadera cae."),
+          ex("drib","Técnica con balón","Toques: interior/exterior (5x45s).","5","45s","30–45s","https://www.youtube.com/watch?v=8lQvKq1iDkQ",
+             "Ritmo constante.","Perder control por ir rápido."),
+          ex("cool","Vuelta a la calma","Respirar.","—","4–5 min","—","https://www.youtube.com/watch?v=YlEr7G8c2Dk",
+             "Relajar.","Cortar.")
+        ]
+      },
+      {
+        id:"sat", dayLabel:"Sábado", title:"Circuito modo partido (divertido)",
+        objective:"Activación general y coordinación, sin fatiga.",
+        approx:"45–60 min",
+        exercises:[
+          ex("warm","Trote + movilidad","Preparar cuerpo.","—","8–10 min","—","https://www.youtube.com/watch?v=2L2lnxIcNmo",
+             "Calentar.","Arrancar fuerte."),
+          ex("lad2","Escalera rápida","2–3 patrones.","2–3","3 patrones","45–60s","https://www.youtube.com/watch?v=R5JpU9JmG8k",
+             "Pies rápidos.","Tropezar."),
+          ex("s52","Sprints 5–10m","4 arranques.","4","1","60–90s","https://www.youtube.com/watch?v=J1xN3O1tEJk",
+             "Fresco.","Fatiga."),
+          ex("jump","Saltos suaves","Pocos, buenos.","2","3","60s","https://www.youtube.com/watch?v=R1JYx6zJ2Ys",
+             "Control.","Muchos."),
+          ex("ball","Balón libre","Tiros/toques 8–10 min.","—","8–10 min","—","https://www.youtube.com/watch?v=8lQvKq1iDkQ",
+             "Terminar feliz.","Agotarse."),
+          ex("cool","Vuelta a la calma","Respirar.","—","4–5 min","—","https://www.youtube.com/watch?v=YlEr7G8c2Dk",
+             "Bajar pulsaciones.","Cortar.")
+        ]
       }
+    ]
+  };
+
+  // ============================
+  // STORAGE
+  // ============================
+  function getActiveProfile(){ return localStorage.getItem("activeProfile") || ""; }
+  function setActiveProfile(id){ localStorage.setItem("activeProfile", id); }
+  function weekKey(profile){ return `mpwa_${profile}_week`; }
+  function getWeek(profile){ return Number(localStorage.getItem(weekKey(profile)) || "1"); }
+  function setWeek(profile, w){ localStorage.setItem(weekKey(profile), String(w)); }
+  function checkKey(profile, week, sessionId, exId){
+    return `mpwa_${profile}_check_w${week}_${sessionId}_${exId}`;
+  }
+
+  // ============================
+  // DOM
+  // ============================
+  const $ = (id) => document.getElementById(id);
+
+  function showError(msg){
+    $("errorText").textContent = msg;
+    $("errorView").classList.remove("hidden");
+  }
+
+  // ============================
+  // MOTIVACIÓN
+  // ============================
+  function newMotivation(){
+    const idx = Math.floor(Math.random()*MOTIVATION.length);
+    $("motivationText").textContent = MOTIVATION[idx];
+  }
+
+  // ============================
+  // PROGRESIÓN (texto semana 1–6)
+  // ============================
+  function getProgressionText(profile, week){
+    if (week <= 1) return "Semana 1: base técnica + calidad. Nada al fallo.";
+
+    if (profile === "benja"){
+      if (week === 2) return "Semana 2: +1 rep por serie en ejercicios de masa si mantienes técnica.";
+      if (week === 3) return "Semana 3: +1 serie en 1 ejercicio principal (pierna o banca) o +2 reps totales.";
+      if (week === 4) return "Semana 4 (deload): baja 15–25% el volumen para recuperar y crecer.";
+      if (week === 5) return "Semana 5: vuelve a Semana 3 con mejor control/velocidad.";
+      return "Semana 6: mejor semana con técnica perfecta (sin fallo).";
     }
 
-    /* ========================================================= */
-    /*  UI: motivación                                            */
-    /* ========================================================= */
-
-    function renderMotivation(){
-      const t = $("motivationText");
-      if (!t) return;
-      const idx = Math.floor(Math.random() * MOTIVATION.length);
-      t.textContent = MOTIVATION[idx];
+    if (profile === "juancho"){
+      if (week === 2) return "Semana 2: misma carga, mejor velocidad. Si fácil: +2.5–5% solo en 1 ejercicio.";
+      if (week === 3) return "Semana 3: +1 serie en prevención o +1 sprint, SIN fatiga.";
+      if (week === 4) return "Semana 4 (deload): reduce volumen 20% para llegar más rápido al partido.";
+      if (week === 5) return "Semana 5: calidad máxima en sprints/saltos. Descanso completo.";
+      return "Semana 6: mismo volumen, mejor ejecución. Objetivo: chispa y frescura.";
     }
 
-    /* ========================================================= */
-    /*  UI: week select                                           */
-    /* ========================================================= */
+    // Gaston
+    if (week === 2) return "Semana 2: +1 ronda de juego/técnica o +5s de plancha si sale perfecto.";
+    if (week === 3) return "Semana 3: mejor coordinación (mejor ritmo), no más cansancio.";
+    if (week === 4) return "Semana 4: semana fácil: técnica suave + diversión.";
+    if (week === 5) return "Semana 5: repite Semana 3 con mejor control.";
+    return "Semana 6: semana estrella: calidad, sonrisas y técnica.";
+  }
 
-    function fillWeekSelect(profile){
-      const ws = $("weekSelect");
-      if (!ws) return;
+  // ============================
+  // PROGRESO
+  // ============================
+  function getProfileSessions(profile){
+    return PLANS[profile] || [];
+  }
 
-      ws.innerHTML = "";
-      [1,2,3,4,5,6].forEach(w=>{
-        const opt = document.createElement("option");
-        opt.value = String(w);
-        opt.textContent = String(w);
-        ws.appendChild(opt);
+  function getSessionProgress(profile, sessionId){
+    const w = getWeek(profile);
+    const sess = getProfileSessions(profile).find(s => s.id === sessionId);
+    if (!sess) return {done:0,total:0,pct:0};
+
+    const total = sess.exercises.length;
+    let done = 0;
+    sess.exercises.forEach(e=>{
+      if (localStorage.getItem(checkKey(profile, w, sessionId, e.id)) === "1") done++;
+    });
+    const pct = total ? Math.round((done/total)*100) : 0;
+    return {done,total,pct};
+  }
+
+  function getWeeklyProgress(profile){
+    const sessions = getProfileSessions(profile);
+    let total = 0, done = 0;
+    sessions.forEach(s=>{
+      const p = getSessionProgress(profile, s.id);
+      total += p.total;
+      done += p.done;
+    });
+    const pct = total ? Math.round((done/total)*100) : 0;
+    return {done,total,pct};
+  }
+
+  // ============================
+  // TIMER: parse descanso
+  // ============================
+  function restToSeconds(restStr){
+    if (!restStr) return 60;
+    const s = String(restStr).toLowerCase().trim();
+    if (s === "—" || s === "-") return 60;
+
+    const rangeM = s.match(/(\d+)\s*[–-]\s*(\d+)\s*m/);
+    if (rangeM) return parseInt(rangeM[1],10) * 60;
+
+    const rangeS = s.match(/(\d+)\s*[–-]\s*(\d+)\s*s/);
+    if (rangeS) return parseInt(rangeS[1],10);
+
+    const m = s.match(/(\d+)\s*m/);
+    if (m) return parseInt(m[1],10) * 60;
+
+    const sec = s.match(/(\d+)\s*s/);
+    if (sec) return parseInt(sec[1],10);
+
+    const n = s.match(/(\d+)/);
+    return n ? parseInt(n[1],10) : 60;
+  }
+
+  // ============================
+  // TIMER: modal
+  // ============================
+  let timerInterval = null;
+  let timerRemaining = 0;
+  let timerRunning = false;
+
+  function fmtTime(t){
+    const mm = Math.floor(t/60);
+    const ss = t % 60;
+    return String(mm).padStart(2,"0") + ":" + String(ss).padStart(2,"0");
+  }
+
+  function openTimer(exName, seconds){
+    $("timerExerciseName").textContent = exName || "Descanso";
+    timerRemaining = Math.max(0, seconds || 60);
+    timerRunning = false;
+    $("timerDisplay").textContent = fmtTime(timerRemaining);
+    const modal = $("timerModal");
+    modal.style.display = "flex";
+  }
+
+  function closeTimer(){
+    stopTimer();
+    $("timerModal").style.display = "none";
+  }
+
+  function startTimer(){
+    if (timerRunning) return;
+    timerRunning = true;
+    timerInterval = setInterval(() => {
+      timerRemaining = Math.max(0, timerRemaining - 1);
+      $("timerDisplay").textContent = fmtTime(timerRemaining);
+      if (timerRemaining <= 0){
+        stopTimer();
+        try { navigator.vibrate && navigator.vibrate([80,60,80]); } catch(e){}
+      }
+    }, 1000);
+  }
+
+  function stopTimer(){
+    timerRunning = false;
+    if (timerInterval){ clearInterval(timerInterval); timerInterval = null; }
+  }
+
+  function resetTimer(){
+    stopTimer();
+    $("timerDisplay").textContent = fmtTime(timerRemaining);
+  }
+
+  function initTimerUI(){
+    $("timerCloseBtn").onclick = closeTimer;
+    $("timerStartBtn").onclick = startTimer;
+    $("timerPauseBtn").onclick = stopTimer;
+    $("timerResetBtn").onclick = resetTimer;
+
+    $("timerModal").querySelectorAll("[data-tsec]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        timerRemaining = parseInt(btn.getAttribute("data-tsec"), 10);
+        $("timerDisplay").textContent = fmtTime(timerRemaining);
       });
-
-      ws.value = String(getWeek(profile));
-    }
-
-    /* ========================================================= */
-    /*  UI: KPIs                                                  */
-    /* ========================================================= */
-
-    function updateKpis(profile){
-      if ($("kpiProfile")) $("kpiProfile").textContent = PROFILES[profile]?.name || "—";
-      if ($("kpiWeek")) $("kpiWeek").textContent = String(getWeek(profile) || "—");
-    }
-
-    /* ========================================================= */
-    /*  UI: info perfil (debajo del selector)                      */
-    /* ========================================================= */
-
-    function refreshProfileInfo(){
-      const ps = $("profileSelect");
-      const info = $("profileInfo");
-      if (!ps || !info) return;
-      const id = ps.value;
-      info.textContent = PROFILES[id] ? PROFILES[id].info : "—";
-    }
-
-    /* ========================================================= */
-    /*  UI: pill de perfil en header                               */
-    /* ========================================================= */
-
-    function setProfilePill(profile){
-      const pill = $("profilePill");
-      if (!pill) return;
-      pill.innerHTML = `<span class="dot good"></span> Perfil: ${PROFILES[profile]?.name || "—"}`;
-    }
-
-    /* ========================================================= */
-    /*  UI: cambiar vistas                                         */
-    /* ========================================================= */
-
-    function showProfileView(){
-      $("profileView")?.classList.remove("hidden");
-      $("appView")?.classList.add("hidden");
-    }
-
-    function showAppView(){
-      $("profileView")?.classList.add("hidden");
-      $("appView")?.classList.remove("hidden");
-    }
-
-    /* ========================================================= */
-    /*  PROGRESO: cálculo por sesión                               */
-    /* ========================================================= */
-
-    function getSessionProgress(profile, sessionId){
-      const w = getWeek(profile);
-      const plan = getPlan(profile);
-      const sess = plan.find(s => s.id === sessionId);
-      if (!sess) return { done: 0, total: 0, pct: 0 };
-
-      const total = sess.exercises.length;
-      let done = 0;
-
-      sess.exercises.forEach(ex => {
-        const k = checkKey(profile, w, sessionId, ex.id);
-        if (localStorage.getItem(k) === "1") done++;
-      });
-
-      const pct = total ? Math.round((done / total) * 100) : 0;
-      return { done, total, pct };
-    }
-
-    /* ========================================================= */
-    /*  HOME: render semanal                                       */
-    /* ========================================================= */
-
-    function renderHome(profile){
-      const home = $("homeView");
-      const sess = $("sessionView");
-      const planTitle = $("planTitle");
-      const planSubtitle = $("planSubtitle");
-
-      if (!home || !sess || !planTitle || !planSubtitle) return;
-
-      sess.classList.add("hidden");
-      home.innerHTML = "";
-
-      const plan = getPlan(profile);
-      const w = getWeek(profile);
-
-      planTitle.textContent = `Programa de ${PROFILES[profile]?.name || ""}`;
-      planSubtitle.textContent = `${PROFILES[profile]?.info || ""} · Semana ${w}`;
-
-      const intro = document.createElement("div");
-      intro.className = "sessionCard";
-      intro.innerHTML = `
-        <div class="row between">
-          <span class="pill"><span class="dot good"></span> Semana ${w}</span>
-          <span class="pill"><span class="dot"></span> 4 sesiones</span>
-          <span class="pill"><span class="dot"></span> Calidad &gt; fatiga</span>
-        </div>
-        <div class="meta" style="margin-top:10px">
-          Fuerza: termina con 1–3 reps en reserva. Sprints/saltos: descanso completo.
-        </div>
-      `;
-      home.appendChild(intro);
-
-      plan.forEach(s=>{
-        const prog = getSessionProgress(profile, s.id);
-
-        const c = document.createElement("div");
-        c.className = "sessionCard";
-
-        c.innerHTML = `
-          <h3>${s.title}</h3>
-          <div class="meta">${s.objective}</div>
-          <div style="height:10px"></div>
-          <div class="progressWrap">
-            <div class="progressBar">
-              <div class="progressFill" style="width:${prog.pct}%"></div>
-            </div>
-            <div class="progressText">${prog.done}/${prog.total} · ${prog.pct}%</div>
-          </div>
-          <div class="actions" style="margin-top:12px">
-            <button class="btn primary">Abrir sesión</button>
-            <span class="tag">~60 min</span>
-          </div>
-        `;
-
-        c.querySelector("button").onclick = () => openSession(profile, s.id);
-        home.appendChild(c);
-      });
-
-      updateKpis(profile);
-    }
-
-    /* ========================================================= */
-    /*  SESIÓN: render tabla                                      */
-    /* ========================================================= */
-
-    function openSession(profile, sessionId){
-      const home = $("homeView");
-      const sess = $("sessionView");
-      const st = $("sessionTitle");
-      const so = $("sessionObjective");
-      const table = $("exerciseTable");
-
-      if (!home || !sess || !st || !so || !table) return;
-
-      const plan = getPlan(profile);
-      const s = plan.find(x => x.id === sessionId);
-      if (!s) return;
-
-      const w = getWeek(profile);
-
-      home.innerHTML = "";
-      sess.classList.remove("hidden");
-
-      st.textContent = s.title;
-      so.textContent = `Objetivo: ${s.objective} · Semana ${w}`;
-
-      table.innerHTML = "";
-
-      s.exercises.forEach(ex=>{
-        const k = checkKey(profile, w, s.id, ex.id);
-        const checked = localStorage.getItem(k) === "1";
-
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td><input class="check" type="checkbox" ${checked ? "checked":""}></td>
-          <td><div style="font-weight:900">${ex.name}</div></td>
-          <td>${ex.sets}</td>
-          <td>${ex.reps}</td>
-          <td>${ex.rest}</td>
-          <td><a href="${ex.url}" target="_blank" rel="noopener">Ver</a></td>
-        `;
-
-        tr.querySelector("input").addEventListener("change", (ev)=>{
-          localStorage.setItem(k, ev.target.checked ? "1" : "0");
-        });
-
-        table.appendChild(tr);
-      });
-
-      updateKpis(profile);
-    }
-
-    /* ========================================================= */
-    /*  RESET CHECKS (solo semana actual)                          */
-    /* ========================================================= */
-
-    function resetChecks(profile){
-      const w = getWeek(profile);
-      const prefix = `mpwa_${profile}_check_w${w}_`;
-      Object.keys(localStorage).forEach(k=>{
-        if (k.startsWith(prefix)) localStorage.removeItem(k);
-      });
-      alert(`Checks reseteados · Semana ${w} · ${PROFILES[profile]?.name || ""}`);
-      renderHome(profile);
-    }
-
-    /* ========================================================= */
-    /*  INIT                                                      */
-    /* ========================================================= */
-
-    document.addEventListener("DOMContentLoaded", () => {
-      try {
-        renderMotivation();
-
-        const ps = $("profileSelect");
-        if (!ps) return safeShowError("No se encontró #profileSelect. Asegúrate de que pegaste el archivo completo.");
-
-        // Llenar selector de perfiles
-        ps.innerHTML = "";
-        Object.keys(PROFILES).forEach(id=>{
-          const opt = document.createElement("option");
-          opt.value = id;
-          opt.textContent = PROFILES[id].name;
-          ps.appendChild(opt);
-        });
-
-        ps.addEventListener("change", refreshProfileInfo);
-        refreshProfileInfo();
-
-        // Botón entrar
-        $("enterBtn")?.addEventListener("click", () => {
-          const id = ps.value;
-          if (!id) return;
-
-          ACTIVE_PROFILE = id;
-          ACTIVE_PLAN = getPlan(id);
-
-          setActiveProfile(id);
-          setProfilePill(id);
-
-          if (!localStorage.getItem(weekKey(id))) setWeek(id, 1);
-
-          fillWeekSelect(id);
-          showAppView();
-          renderHome(id);
-        });
-
-        // Cambiar perfil
-        $("switchProfileBtn")?.addEventListener("click", () => {
-          showProfileView();
-          const active = getActiveProfile();
-          if (active && ps){
-            ps.value = active;
-            refreshProfileInfo();
-          }
-        });
-
-        // Volver a home
-        $("homeBtn")?.addEventListener("click", () => {
-          if (!ACTIVE_PROFILE) ACTIVE_PROFILE = getActiveProfile();
-          if (ACTIVE_PROFILE) renderHome(ACTIVE_PROFILE);
-        });
-
-        $("backBtn")?.addEventListener("click", () => {
-          if (!ACTIVE_PROFILE) ACTIVE_PROFILE = getActiveProfile();
-          if (ACTIVE_PROFILE) renderHome(ACTIVE_PROFILE);
-        });
-
-        // Reset checks
-        $("resetChecksBtn")?.addEventListener("click", () => {
-          if (!ACTIVE_PROFILE) ACTIVE_PROFILE = getActiveProfile();
-          if (ACTIVE_PROFILE) resetChecks(ACTIVE_PROFILE);
-        });
-
-        // Semana
-        $("weekSelect")?.addEventListener("change", (e) => {
-          if (!ACTIVE_PROFILE) ACTIVE_PROFILE = getActiveProfile();
-          if (!ACTIVE_PROFILE) return;
-          const v = Number(e.target.value || "1");
-          setWeek(ACTIVE_PROFILE, v);
-          renderHome(ACTIVE_PROFILE);
-        });
-
-        // Auto-entrar si había perfil guardado
-        const saved = getActiveProfile();
-        if (saved && PROFILES[saved]){
-          ACTIVE_PROFILE = saved;
-          ACTIVE_PLAN = getPlan(saved);
-
-          ps.value = saved;
-          refreshProfileInfo();
-
-          setProfilePill(saved);
-
-          if (!localStorage.getItem(weekKey(saved))) setWeek(saved, 1);
-          fillWeekSelect(saved);
-
-          showAppView();
-          renderHome(saved);
-        } else {
-          showProfileView();
-          $("profilePill").innerHTML = `<span class="dot"></span> Perfil: —`;
-          updateKpis("juancho");
-        }
-
-        // Service worker (desactivado por estabilidad)
-        if (ENABLE_SW && "serviceWorker" in navigator) {
-          window.addEventListener("load", () => {
-            navigator.serviceWorker.register("./sw.js").catch(()=>{});
-          });
-        }
-
-      } catch (err) {
-        console.error(err);
-        safeShowError("Error en JavaScript: " + (err?.message || err));
-      }
     });
 
-  })();
-  </script>
+    // click fuera
+    $("timerModal").addEventListener("click", (e) => {
+      if (e.target === $("timerModal")) closeTimer();
+    });
+  }
 
-  <!-- ========================================================= -->
-  <!--  (Padding de líneas para que sea fácil editar sin romper)  -->
-  <!--  Puedes ignorar esta sección.                              -->
-  <!-- ========================================================= -->
+  // ============================
+  // UI: selectors
+  // ============================
+  function fillProfileSelect(){
+    const ps = $("profileSelect");
+    ps.innerHTML = "";
+    Object.keys(PROFILES).forEach(id=>{
+      const opt = document.createElement("option");
+      opt.value = id;
+      opt.textContent = PROFILES[id].name;
+      ps.appendChild(opt);
+    });
+    ps.addEventListener("change", () => {
+      const id = ps.value;
+      $("profileInfo").textContent = PROFILES[id]?.info || "—";
+    });
+    $("profileInfo").textContent = PROFILES[ps.value]?.info || "—";
+  }
 
-  <!-- line padding 001 -->
-  <!-- line padding 002 -->
-  <!-- line padding 003 -->
-  <!-- line padding 004 -->
-  <!-- line padding 005 -->
-  <!-- line padding 006 -->
-  <!-- line padding 007 -->
-  <!-- line padding 008 -->
-  <!-- line padding 009 -->
-  <!-- line padding 010 -->
-  <!-- line padding 011 -->
-  <!-- line padding 012 -->
-  <!-- line padding 013 -->
-  <!-- line padding 014 -->
-  <!-- line padding 015 -->
-  <!-- line padding 016 -->
-  <!-- line padding 017 -->
-  <!-- line padding 018 -->
-  <!-- line padding 019 -->
-  <!-- line padding 020 -->
-  <!-- line padding 021 -->
-  <!-- line padding 022 -->
-  <!-- line padding 023 -->
-  <!-- line padding 024 -->
-  <!-- line padding 025 -->
-  <!-- line padding 026 -->
-  <!-- line padding 027 -->
-  <!-- line padding 028 -->
-  <!-- line padding 029 -->
-  <!-- line padding 030 -->
-  <!-- line padding 031 -->
-  <!-- line padding 032 -->
-  <!-- line padding 033 -->
-  <!-- line padding 034 -->
-  <!-- line padding 035 -->
-  <!-- line padding 036 -->
-  <!-- line padding 037 -->
-  <!-- line padding 038 -->
-  <!-- line padding 039 -->
-  <!-- line padding 040 -->
-  <!-- line padding 041 -->
-  <!-- line padding 042 -->
-  <!-- line padding 043 -->
-  <!-- line padding 044 -->
-  <!-- line padding 045 -->
-  <!-- line padding 046 -->
-  <!-- line padding 047 -->
-  <!-- line padding 048 -->
-  <!-- line padding 049 -->
-  <!-- line padding 050 -->
-  <!-- line padding 051 -->
-  <!-- line padding 052 -->
-  <!-- line padding 053 -->
-  <!-- line padding 054 -->
-  <!-- line padding 055 -->
-  <!-- line padding 056 -->
-  <!-- line padding 057 -->
-  <!-- line padding 058 -->
-  <!-- line padding 059 -->
-  <!-- line padding 060 -->
-  <!-- line padding 061 -->
-  <!-- line padding 062 -->
-  <!-- line padding 063 -->
-  <!-- line padding 064 -->
-  <!-- line padding 065 -->
-  <!-- line padding 066 -->
-  <!-- line padding 067 -->
-  <!-- line padding 068 -->
-  <!-- line padding 069 -->
-  <!-- line padding 070 -->
-  <!-- line padding 071 -->
-  <!-- line padding 072 -->
-  <!-- line padding 073 -->
-  <!-- line padding 074 -->
-  <!-- line padding 075 -->
-  <!-- line padding 076 -->
-  <!-- line padding 077 -->
-  <!-- line padding 078 -->
-  <!-- line padding 079 -->
-  <!-- line padding 080 -->
-  <!-- line padding 081 -->
-  <!-- line padding 082 -->
-  <!-- line padding 083 -->
-  <!-- line padding 084 -->
-  <!-- line padding 085 -->
-  <!-- line padding 086 -->
-  <!-- line padding 087 -->
-  <!-- line padding 088 -->
-  <!-- line padding 089 -->
-  <!-- line padding 090 -->
-  <!-- line padding 091 -->
-  <!-- line padding 092 -->
-  <!-- line padding 093 -->
-  <!-- line padding 094 -->
-  <!-- line padding 095 -->
-  <!-- line padding 096 -->
-  <!-- line padding 097 -->
-  <!-- line padding 098 -->
-  <!-- line padding 099 -->
-  <!-- line padding 100 -->
+  function fillWeekSelect(profile){
+    const ws = $("weekSelect");
+    ws.innerHTML = "";
+    [1,2,3,4,5,6].forEach(w=>{
+      const opt = document.createElement("option");
+      opt.value = String(w);
+      opt.textContent = String(w);
+      ws.appendChild(opt);
+    });
+    ws.value = String(getWeek(profile));
+  }
 
+  function setProfilePill(profile){
+    $("profilePill").innerHTML = `<span class="dot good"></span> Perfil: ${PROFILES[profile]?.name || "—"}`;
+  }
+
+  function updateKPIs(profile){
+    $("kpiProfile").textContent = PROFILES[profile]?.name || "—";
+    $("kpiWeek").textContent = String(getWeek(profile) || "—");
+    const wk = getWeeklyProgress(profile);
+    $("kpiWeeklyPct").textContent = wk.pct + "%";
+  }
+
+  function showProfileView(){
+    $("profileView").classList.remove("hidden");
+    $("appView").classList.add("hidden");
+    $("sessionView").classList.add("hidden");
+  }
+
+  function showAppView(){
+    $("profileView").classList.add("hidden");
+    $("appView").classList.remove("hidden");
+  }
+
+  // ============================
+  // HOME
+  // ============================
+  function renderHome(profile){
+    $("sessionView").classList.add("hidden");
+    const home = $("homeView");
+    home.innerHTML = "";
+
+    const week = getWeek(profile);
+    const sessions = getProfileSessions(profile);
+    const wk = getWeeklyProgress(profile);
+
+    $("planTitle").textContent = `Programa de ${PROFILES[profile].name}`;
+    $("planSubtitle").textContent = `${PROFILES[profile].info} · Semana ${week}`;
+
+    // Progreso global + barra
+    const top = document.createElement("div");
+    top.className = "sessionCard";
+    top.innerHTML = `
+      <div class="row between">
+        <span class="pill"><span class="dot good"></span> Semana ${week}</span>
+        <span class="tag">Progreso semanal: <b>${wk.done}/${wk.total}</b> (${wk.pct}%)</span>
+      </div>
+      <div style="height:10px"></div>
+      <div class="progressWrap">
+        <div class="bar"><div class="fill" style="width:${wk.pct}%"></div></div>
+        <div class="pct">${wk.pct}%</div>
+      </div>
+      <div class="hint" style="border-top:none; padding:10px 0 0 0;">
+        🎯 <b>Progresión sugerida:</b> ${getProgressionText(profile, week)}
+      </div>
+    `;
+    home.appendChild(top);
+
+    // Tarjetas de los 4 días
+    sessions.forEach(s=>{
+      const p = getSessionProgress(profile, s.id);
+
+      const card = document.createElement("div");
+      card.className = "sessionCard";
+      card.innerHTML = `
+        <div class="row between">
+          <div>
+            <h3>${s.dayLabel} · ${s.title}</h3>
+            <div class="meta">${s.objective}</div>
+          </div>
+          <span class="tag">${s.approx}</span>
+        </div>
+
+        <div style="height:10px"></div>
+
+        <div class="progressWrap">
+          <div class="bar"><div class="fill" style="width:${p.pct}%"></div></div>
+          <div class="pct">${p.done}/${p.total} · ${p.pct}%</div>
+        </div>
+
+        <div class="row between" style="margin-top:12px">
+          <button class="btn primary">Abrir día</button>
+          <span class="pill"><span class="dot"></span> 1h aprox</span>
+        </div>
+      `;
+      card.querySelector("button").onclick = () => openSession(profile, s.id);
+      home.appendChild(card);
+    });
+
+    updateKPIs(profile);
+  }
+
+  // ============================
+  // COMPLETAR SESIÓN
+  // ============================
+  function markSessionComplete(profile, sessionId){
+    const week = getWeek(profile);
+    const session = getProfileSessions(profile).find(s => s.id === sessionId);
+    if (!session) return;
+
+    session.exercises.forEach(ex => {
+      localStorage.setItem(checkKey(profile, week, sessionId, ex.id), "1");
+    });
+
+    openSession(profile, sessionId);
+  }
+
+  // ============================
+  // SESSION
+  // ============================
+  function openSession(profile, sessionId){
+    ACTIVE_SESSION_ID = sessionId;
+
+    const home = $("homeView");
+    const sessView = $("sessionView");
+    const table = $("exerciseTable");
+
+    home.innerHTML = "";
+    sessView.classList.remove("hidden");
+
+    const week = getWeek(profile);
+    const session = getProfileSessions(profile).find(s => s.id === sessionId);
+    if (!session) return;
+
+    $("sessionTitle").textContent = `${session.dayLabel} · ${session.title}`;
+    $("sessionObjective").textContent = `Objetivo: ${session.objective} · Semana ${week}`;
+    $("sessionTimeTag").textContent = session.approx || "~60 min";
+    $("progressionHint").innerHTML = `🎯 <b>Progresión sugerida:</b> ${getProgressionText(profile, week)}`;
+
+    $("completeSessionBtn").onclick = () => markSessionComplete(profile, sessionId);
+
+    table.innerHTML = "";
+
+    session.exercises.forEach(e=>{
+      const k = checkKey(profile, week, sessionId, e.id);
+      const checked = localStorage.getItem(k) === "1";
+      const restSeconds = restToSeconds(e.rest);
+
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td><input class="check" type="checkbox" ${checked ? "checked":""}></td>
+
+        <td>
+          <div class="row between" style="gap:10px">
+            <div style="font-weight:900">${e.name}</div>
+            <button class="timerBtn" title="Cronómetro de descanso">⏱</button>
+          </div>
+
+          <div class="small muted" style="margin-top:4px; line-height:1.35">${e.desc || ""}</div>
+
+          <details>
+            <summary>Notas técnicas</summary>
+            <div class="small muted" style="margin-top:6px; line-height:1.45">
+              <b>Claves:</b> ${e.keys || "Técnica limpia, control y explosión donde corresponda."}<br>
+              <b>Errores comunes:</b> ${e.errors || "Compensar con espalda, rodilla colapsa, ir al fallo sin necesidad."}
+            </div>
+          </details>
+        </td>
+
+        <td>${e.sets ?? "—"}</td>
+        <td>${e.reps ?? "—"}</td>
+        <td>${e.rest ?? "—"}</td>
+        <td><a href="${e.url}" target="_blank" rel="noopener">Ver</a></td>
+      `;
+
+      tr.querySelector("input").addEventListener("change", (ev)=>{
+        localStorage.setItem(k, ev.target.checked ? "1" : "0");
+        updateKPIs(profile);
+      });
+
+      tr.querySelector(".timerBtn").addEventListener("click", () => {
+        openTimer(e.name, restSeconds);
+      });
+
+      table.appendChild(tr);
+    });
+
+    updateKPIs(profile);
+  }
+
+  // ============================
+  // RESET SEMANA
+  // ============================
+  function resetWeek(profile){
+    const w = getWeek(profile);
+    const prefix = `mpwa_${profile}_check_w${w}_`;
+    Object.keys(localStorage).forEach(key=>{
+      if (key.startsWith(prefix)) localStorage.removeItem(key);
+    });
+    alert(`Semana ${w} reseteada para ${PROFILES[profile].name}`);
+    renderHome(profile);
+  }
+
+  // ============================
+  // INIT
+  // ============================
+  document.addEventListener("DOMContentLoaded", () => {
+    try {
+      newMotivation();
+      $("newMotivationBtn").addEventListener("click", newMotivation);
+
+      fillProfileSelect();
+      initTimerUI();
+
+      $("enterBtn").addEventListener("click", () => {
+        const id = $("profileSelect").value;
+        if (!id) return;
+
+        ACTIVE_PROFILE = id;
+        setActiveProfile(id);
+        setProfilePill(id);
+
+        if (!localStorage.getItem(weekKey(id))) setWeek(id, 1);
+        fillWeekSelect(id);
+
+        showAppView();
+        newMotivation();
+        renderHome(id);
+      });
+
+      $("switchProfileBtn").addEventListener("click", () => {
+        showProfileView();
+        const saved = getActiveProfile();
+        if (saved && PROFILES[saved]){
+          $("profileSelect").value = saved;
+          $("profileInfo").textContent = PROFILES[saved].info;
+        }
+      });
+
+      $("homeBtn").addEventListener("click", () => {
+        if (!ACTIVE_PROFILE) ACTIVE_PROFILE = getActiveProfile();
+        if (ACTIVE_PROFILE) renderHome(ACTIVE_PROFILE);
+      });
+
+      $("backBtn").addEventListener("click", () => {
+        if (!ACTIVE_PROFILE) ACTIVE_PROFILE = getActiveProfile();
+        if (ACTIVE_PROFILE) renderHome(ACTIVE_PROFILE);
+      });
+
+      $("resetBtn").addEventListener("click", () => {
+        if (!ACTIVE_PROFILE) ACTIVE_PROFILE = getActiveProfile();
+        if (ACTIVE_PROFILE) resetWeek(ACTIVE_PROFILE);
+      });
+
+      $("weekSelect").addEventListener("change", (e) => {
+        if (!ACTIVE_PROFILE) ACTIVE_PROFILE = getActiveProfile();
+        if (!ACTIVE_PROFILE) return;
+        setWeek(ACTIVE_PROFILE, Number(e.target.value || "1"));
+        renderHome(ACTIVE_PROFILE);
+      });
+
+      // Auto-entrar
+      const saved = getActiveProfile();
+      if (saved && PROFILES[saved]){
+        ACTIVE_PROFILE = saved;
+        setProfilePill(saved);
+        if (!localStorage.getItem(weekKey(saved))) setWeek(saved, 1);
+        fillWeekSelect(saved);
+        showAppView();
+        renderHome(saved);
+      } else {
+        showProfileView();
+        $("profilePill").innerHTML = `<span class="dot"></span> Perfil: —`;
+        $("kpiProfile").textContent = "—";
+        $("kpiWeek").textContent = "—";
+        $("kpiWeeklyPct").textContent = "—";
+      }
+
+    } catch (err) {
+      console.error(err);
+      showError("Error en JavaScript: " + (err?.message || err));
+    }
+  });
+})();
+</script>
 </body>
 </html>
-
-
-
