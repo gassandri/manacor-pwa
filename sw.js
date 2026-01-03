@@ -1,4 +1,17 @@
 /* sw.js — Network-first for HTML (avoids "stuck" old index.html) */
+// Al cargar la app: activamos la clase para disparar el brillo diagonal 1 vez.
+window.addEventListener("DOMContentLoaded", () => {
+  const logo = document.querySelector(".logo");
+  if (!logo) return;
+
+  // dispara animación
+  logo.classList.add("is-opening");
+
+  // opcional: limpiar la clase al terminar (queda todo quieto)
+  setTimeout(() => {
+    logo.classList.remove("is-opening");
+  }, 1400);
+});
 
 const CACHE_NAME = "manacor-pwa-v3"; // si vuelves a cambiar, sube a v4, v5, etc.
 
@@ -80,3 +93,4 @@ async function staleWhileRevalidate(request) {
 
   return cached || (await fetchPromise) || new Response("", { status: 504 });
 }
+
